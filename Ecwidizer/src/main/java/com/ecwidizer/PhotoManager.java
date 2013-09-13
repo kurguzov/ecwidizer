@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -24,18 +23,41 @@ import java.util.List;
  */
 public class PhotoManager {
 
-	private void log(String message) {
-		Log.i(PhotoManager.class.getName(), message);
+	private static final int TAKE_PICTURE = 1;
+	private static final int SAVE_PICTURE = 2;
+
+	public void takePhoto(Activity activity) {
+		Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		if (isIntentAvailable(activity.getApplicationContext(), captureIntent)) {
+			activity.startActivityForResult(captureIntent, TAKE_PICTURE);
+		} else {
+			Logger.error("Image Capture is not available");
+		}
 	}
 
-	private void savePicture(Intent data) {
+	public void dispatchActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case TAKE_PICTURE:
+				handleSmallCameraPhoto(activity, data);
+				savePicture(activity, data);
+				break;
+			case SAVE_PICTURE:
+				// push to kaktus
+				break;
+			default:
+				Logger.error("Invalid action: " + requestCode);
+		}
+	}
+
+	private void savePicture(Activity activity, Intent data) {
 		try {
 			File f = createImageFile();
-			System.out.println("Saving to file: " + f.getAbsolutePath());
+			Logger.log("Saving to file: " + f.getAbsolutePath());
 			data.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-//			startActivityForResult(data, 2);
+			activity.startActivityForResult(data, SAVE_PICTURE);
 		} catch (IOException e) {
 			e.printStackTrace();
+			Logger.error("Failed to save picture", e);
 		}
 	}
 
@@ -51,10 +73,10 @@ public class PhotoManager {
 				"ecwid-photos"
 		);
 		if (!storageDir.exists()) {
-			log("storageDir " + storageDir.getAbsolutePath() + " doesn't exist, creating...");
+			Logger.log("storageDir " + storageDir.getAbsolutePath() + " doesn't exist, creating...");
 			storageDir.mkdir();
 		}
-		log("storageDir: " + storageDir.getAbsolutePath() + "=>" + storageDir.isDirectory());
+		Logger.log("storageDir: " + storageDir.getAbsolutePath() + "=>" + storageDir.isDirectory());
 		if (!storageDir.isDirectory()) return null;
 
 		File image = File.createTempFile(
@@ -64,19 +86,12 @@ public class PhotoManager {
 		return image;
 	}
 
-	public void takePhoto(Activity activity) {
-		Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		if (isIntentAvailable(activity.getApplicationContext(), captureIntent)) {
-			activity.startActivityForResult(captureIntent, 1);
-		}
-	}
-
-	private void handleSmallCameraPhoto(Intent intent) {
-//		Bundle extras = intent.getExtras();
-//		if (extras == null) return;
-//		Bitmap bitmap = (Bitmap) extras.get("data");
-//		ImageView mImageView = (ImageView) findViewById(R.id.imageView);
-//		mImageView.setImageBitmap(bitmap);
+	private void handleSmallCameraPhoto(Activity activity, Intent intent) {
+		Bundle extras = intent.getExtras();
+		if (extras == null) return;
+		Bitmap bitmap = (Bitmap) extras.get("data");
+		ImageView mImageView = (ImageView) activity.findViewById(R.id.imageView);
+		mImageView.setImageBitmap(bitmap);
 	}
 
 	private static boolean isIntentAvailable(Context context, Intent intent) {
@@ -86,7 +101,4 @@ public class PhotoManager {
 		return list.size() > 0;
 	}
 
-	public void dispatchActivityResult(int requestCode, int resultCode, Intent data) {
-
-	}
 }
