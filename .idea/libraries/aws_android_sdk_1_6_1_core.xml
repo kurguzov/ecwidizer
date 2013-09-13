@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="aws-android-sdk-1.6.1-core">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Ecwidizer/lib/aws-android-sdk-1.6.1-core.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
