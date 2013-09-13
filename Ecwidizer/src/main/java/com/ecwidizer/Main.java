@@ -3,6 +3,7 @@ package com.ecwidizer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.View;
 
 public class Main extends Activity {
 
@@ -20,4 +21,7 @@ public class Main extends Activity {
 		return true;
 	}
 
+	public void takePhotoClicked(View view) {
+
+	}
 }
