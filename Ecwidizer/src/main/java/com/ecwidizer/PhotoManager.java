@@ -79,10 +79,7 @@ public class PhotoManager {
 		Logger.log("storageDir: " + storageDir.getAbsolutePath() + "=>" + storageDir.isDirectory());
 		if (!storageDir.isDirectory()) return null;
 
-		File image = File.createTempFile(
-				storageDir.getAbsolutePath() + "/" + imageFileName,
-				".jpg"
-		);
+		File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 		return image;
 	}
 
