@@ -9,11 +9,11 @@ public class Logger {
 
 	private static final String ECWIDIZER = "ECWIDIZER";
 
-	private void log(String message) {
+	public static void log(String message) {
 		Log.i(ECWIDIZER, message);
 	}
 
-	private void error(String message) {
+	public static void error(String message) {
 		Log.e(ECWIDIZER, message);
 	}
 }
