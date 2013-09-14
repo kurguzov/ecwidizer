@@ -57,7 +57,7 @@ public class PhotoManager {
 	public void dispatchActivityResult(Activity activity, int requestCode, int resultCode, Intent data, SaveImageCallback callback) {
 		try {
 			if (requestCode != TAKE_PICTURE) {
-				throw new Exception("Invalid action: " + requestCode);
+				return;
 			}
 			if (resultCode == Activity.RESULT_OK) {
 				if (data != null) {

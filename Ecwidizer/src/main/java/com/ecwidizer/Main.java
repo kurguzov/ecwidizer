@@ -14,13 +14,15 @@ import com.ecwidizer.S3.S3Manager;
 import com.ecwidizer.S3.S3ManagerInitializeException;
 import com.ecwidizer.api.CreateProductRequest;
 import com.ecwidizer.api.ProductApiRequestor;
+import com.ecwidizer.api.VoiceManager;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.io.File;
 public class Main extends FragmentActivity {
 
-	private PhotoManager photoManager = new PhotoManager();
+	private final PhotoManager photoManager = new PhotoManager();
+    private final VoiceManager voiceManager = new VoiceManager();
 
 	/**
 	 * Обработчик сохранения картинки
@@ -57,6 +59,7 @@ public class Main extends FragmentActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		photoManager.dispatchActivityResult(this, requestCode, resultCode, data, new ImageSaver());
+        voiceManager.dispatchActivityResult(this, requestCode, resultCode, data);
 	}
 
 	@Override
@@ -69,23 +72,40 @@ public class Main extends FragmentActivity {
 	public void takePhotoClicked(View view) {
 //        SettingsDialogFragment settingsDialogFragment = new SettingsDialogFragment();
 //        settingsDialogFragment.show(getSupportFragmentManager(), "Settings");
-
-//        // Тестирование API. TODO: удалить сей говнокод
-//        Logger.log("TEST1");
-//        Logger.error("TEST1");
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                ProductApiRequestor.test();
-//            }
-//        }.start();
-//
 		photoManager.takePhoto(this);
-
     }
 
 	public void setProductThumbnail(Bitmap bitmap) {
 		ImageView mImageView = (ImageView) findViewById(R.id.imageView);
 		mImageView.setImageBitmap(bitmap);
 	}
+
+    public void captureProductName(View view) {
+        voiceManager.captureName(this);
+    }
+
+    public void setProductName(String name) {
+        Logger.log("PRODUCT NAME: "+name);
+    }
+
+    public void captureProductDescr(View view) {
+        voiceManager.captureDescr(this);
+    }
+
+    public void setProductDescr(String descr) {
+        Logger.log("PRODUCT DESCR: "+descr);
+    }
+
+    public void saveProduct(View view) {
+        // Тестирование API.
+        Logger.log("TEST1");
+        Logger.error("TEST1");
+        new Thread() {
+            @Override
+            public void run() {
+                ProductApiRequestor.test();
+                Logger.log("COMPLETE");
+            }
+        }.start();
+    }
 }

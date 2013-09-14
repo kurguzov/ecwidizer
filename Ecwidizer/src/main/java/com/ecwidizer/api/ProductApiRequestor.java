@@ -5,15 +5,18 @@ import com.ecwidizer.Logger;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by basil on 13.09.13.
@@ -33,11 +36,11 @@ public class ProductApiRequestor {
         }
 
         if (request.price != null) {
-            parameters.add(new BasicNameValuePair("price", new DecimalFormat("#.###").format(request.price)));
+            parameters.add(new BasicNameValuePair("price", new DecimalFormat("#.###", new DecimalFormatSymbols(Locale.US)).format(request.price)));
         }
 
         if (request.weight != null) {
-            parameters.add(new BasicNameValuePair("weight", new DecimalFormat("#.###").format(request.weight)));
+            parameters.add(new BasicNameValuePair("weight", new DecimalFormat("#.###", new DecimalFormatSymbols(Locale.US)).format(request.weight)));
         }
 
         if (request.images != null && !request.images.isEmpty()) {
@@ -51,6 +54,7 @@ public class ProductApiRequestor {
 
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost("http://appdev.ecwid.com/productcreate");
+        post.setEntity(new UrlEncodedFormEntity(parameters, "UTF-8"));
         Logger.log("Product API request: "+parameters);
         HttpResponse resp = client.execute(post);
         if (resp.getStatusLine().getStatusCode() != 200) {
@@ -70,7 +74,7 @@ public class ProductApiRequestor {
             req.description = "Описание заебеквидова продукта";
             req.price = 6.66;
             req.weight = 123.456;
-            req.images = Arrays.asList("http://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Dildos_o_Consoladores_Nena.jpg/220px-Dildos_o_Consoladores_Nena.jpg;http://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Dildos_o_Consoladores_Nena.jpg/220px-Dildos_o_Consoladores_Nena.jpg");
+            req.images = Arrays.asList("http://img01.rl0.ru/pgc/c304x207/5233d273-7e9c-e8c1-7e9c-e8ce65d4737d.photo.0.jpg;http://img01.rl0.ru/pgc/c304x207/5233d273-7e9c-e8c1-7e9c-e8ce65d4737d.photo.0.jpg");
             new ProductApiRequestor().createProduct(req);
         } catch (IOException e) {
             Logger.error("!!!!!!! "+e.toString());
