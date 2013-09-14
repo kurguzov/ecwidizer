@@ -68,10 +68,10 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 15 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="support-v4-18.0.0" level="project" />
-    <orderEntry type="library" name="ComAndroidSupportAppcompatV71800.aar" level="project" />
-    <orderEntry type="library" name="aws-android-sdk-1.6.1-core" level="project" />
-    <orderEntry type="library" name="aws-android-sdk-1.6.1-s3" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-18.0.0" level="project" />
+    <orderEntry type="library" exported="" name="ComAndroidSupportAppcompatV71800.aar" level="project" />
+    <orderEntry type="library" exported="" name="aws-android-sdk-1.6.1-core" level="project" />
+    <orderEntry type="library" exported="" name="aws-android-sdk-1.6.1-s3" level="project" />
   </component>
 </module>
 
