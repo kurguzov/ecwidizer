@@ -1,7 +1,9 @@
 package com.ecwidizer;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -160,23 +162,29 @@ public class Main extends FragmentActivity {
 
 	private void clearFields() {
         runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ImageView mImageView = (ImageView) findViewById(R.id.imageView);
-                mImageView.setImageBitmap(null);
-                imageUrl = null;
-                ((TextView) findViewById(R.id.productNameText)).setText("");
-                ((TextView) findViewById(R.id.productPriceText)).setText("");
-            }
-        });
+			@Override
+			public void run() {
+				try {
+					ImageView mImageView = (ImageView) findViewById(R.id.imageView);
+					mImageView.setImageBitmap(null);
+					mImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
+
+					imageUrl = null;
+					((TextView) findViewById(R.id.productNameText)).setText("");
+					((TextView) findViewById(R.id.productPriceText)).setText("");
+				} catch (Resources.NotFoundException e) {
+					Logger.kernelPanic("unable to clear fields: " + e.getMessage());
+				}
+			}
+		});
 	}
 
 	private void setBusy(final boolean busy) {
         runOnUiThread(new Runnable() {
-            public void run() {
-                findViewById(R.id.addProductButton).setEnabled(!busy);
-                findViewById(R.id.loadingIndicator).setVisibility(busy ? View.VISIBLE : View.INVISIBLE);
-            }
-        });
+			public void run() {
+				findViewById(R.id.addProductButton).setEnabled(!busy);
+				findViewById(R.id.loadingIndicator).setVisibility(busy ? View.VISIBLE : View.INVISIBLE);
+			}
+		});
     }
 }
