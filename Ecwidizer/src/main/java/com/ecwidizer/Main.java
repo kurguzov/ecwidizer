@@ -140,9 +140,14 @@ public class Main extends FragmentActivity {
         Thread thread = new Thread() {
             @Override
             public void run() {
+                long start = System.currentTimeMillis();
                 try {
                     new ProductApiRequestor().createProduct(req);
                     clearFields();
+                    try {
+                        Thread.sleep(Math.max(0, 2000-(System.currentTimeMillis()-start)));
+                    } catch (InterruptedException e) {
+                    }
                 } catch (IOException e) {
                     Logger.error("Платформа - ебаное говно, живи с этим.", e);
                 } finally {
