@@ -22,13 +22,9 @@ public class S3Manager {
 
     private static S3Manager s3Manager;
     private static Context context;
-    private static final String PROPERTIES_FILE = "s3_access.properties";
-    private static Properties properties = new Properties();
     private static AmazonS3Client s3Client;
-    private static String accessKey;
-    private static String secretKey;
-    private static String bucketName;
-    AtomicInteger internalCounter = new AtomicInteger(0);
+    private static String bucketName = "ecwid-dev-kaktus";
+    private static final AtomicInteger internalCounter = new AtomicInteger(0);
 
     public interface ImageUploadedConsumer {
         public void imageUploaded(String imageUri);
@@ -37,28 +33,24 @@ public class S3Manager {
 
     public static S3Manager getInstance(Context context) throws S3ManagerInitializeException {
         S3Manager.context = context;
+
         if(s3Manager == null) {
             s3Manager = new S3Manager();
         }
-        init();
-        return s3Manager;
-    }
 
-    private static void init() throws S3ManagerInitializeException {
         if (s3Client != null) {
-            return;
+            return s3Manager;
         }
+
         try {
-            AssetManager assetManager = context.getResources().getAssets();
-            properties.load(assetManager.open(PROPERTIES_FILE));
-            accessKey = properties.getProperty("accessKey");
-            secretKey = properties.getProperty("secretKey");
-            bucketName = properties.getProperty("bucketname");
-            s3Client = new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey));
+            s3Client = new AmazonS3Client(new BasicAWSCredentials("AKIAJJDL7RRZN3BOIP4A", "THFDsUll6PPsAEvlFERsZNSCTpiY93cNP6yJZm3Q"));
         } catch (Throwable e) {
             throw new S3ManagerInitializeException("Can't initialize S3Manager", e);
         }
         Logger.log("S3 Manager is initialized");
+
+
+        return s3Manager;
     }
 
     /**
