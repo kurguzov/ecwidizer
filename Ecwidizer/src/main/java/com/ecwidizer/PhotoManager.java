@@ -27,37 +27,38 @@ public class PhotoManager {
 	private static final int SAVE_PICTURE = 2;
 
 	public void takePhoto(Activity activity) {
-		Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		if (isIntentAvailable(activity.getApplicationContext(), captureIntent)) {
+		try {
+			Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			if (!isIntentAvailable(activity.getApplicationContext(), captureIntent)) {
+				throw new Exception("Image Capture is not available");
+			}
+			File f = createImageFile();
+			Logger.log("Saving to file: " + f.getAbsolutePath());
+			captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
 			activity.startActivityForResult(captureIntent, TAKE_PICTURE);
-		} else {
-			Logger.error("Image Capture is not available");
+		} catch (Exception e) {
+			Logger.error("Failed to save picture", e);
 		}
 	}
 
 	public void dispatchActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-			case TAKE_PICTURE:
-				handleSmallCameraPhoto(activity, data);
-				savePicture(activity, data);
-				break;
-			case SAVE_PICTURE:
-				// push to kaktus
-				break;
-			default:
-				Logger.error("Invalid action: " + requestCode);
-		}
-	}
-
-	private void savePicture(Activity activity, Intent data) {
 		try {
-			File f = createImageFile();
-			Logger.log("Saving to file: " + f.getAbsolutePath());
-			data.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-			activity.startActivityForResult(data, SAVE_PICTURE);
-		} catch (IOException e) {
-			e.printStackTrace();
-			Logger.error("Failed to save picture", e);
+			if (requestCode != TAKE_PICTURE) {
+				throw new Exception("Invalid action: " + requestCode);
+			}
+			if (resultCode == Activity.RESULT_OK) {
+				// Image captured and saved to fileUri specified in the Intent
+				Logger.log("Image saved to " + data);
+				handleSmallCameraPhoto(activity, data);
+			} else if (resultCode == Activity.RESULT_CANCELED) {
+				// User cancelled the image capture
+				Logger.log("User cancelled image input");
+			} else {
+				// Image capture failed, advise user
+				throw new Exception("Invalid result code: " + requestCode);
+			}
+		} catch (Exception e) {
+			Logger.error("Unable to dispatch activity result #" + requestCode, e);
 		}
 	}
 
