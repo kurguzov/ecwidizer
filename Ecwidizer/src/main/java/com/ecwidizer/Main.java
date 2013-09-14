@@ -140,6 +140,12 @@ public class Main extends FragmentActivity {
             public void run() {
                 try {
                     new ProductApiRequestor().createProduct(req);
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							clearFields();
+						}
+					});
                 } catch (IOException e) {
                     Logger.error("Платформа - ебаное говно, живи с этим.", e);
                 }
@@ -148,7 +154,15 @@ public class Main extends FragmentActivity {
         thread.start();
 	}
 
-    private void setBusy(boolean busy) {
+	private void clearFields() {
+		ImageView mImageView = (ImageView) findViewById(R.id.imageView);
+		mImageView.setImageBitmap(null);
+		imageUrl = null;
+		((TextView) findViewById(R.id.productNameText)).setText("");
+		((TextView) findViewById(R.id.productPriceText)).setText("");
+	}
+
+	private void setBusy(boolean busy) {
         findViewById(R.id.addProductButton).setEnabled(!busy);
         findViewById(R.id.loadingIndicator).setVisibility(busy? View.VISIBLE : View.INVISIBLE);
     }
