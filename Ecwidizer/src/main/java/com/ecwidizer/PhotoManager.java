@@ -3,9 +3,11 @@ package com.ecwidizer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,7 +26,7 @@ import java.util.List;
 public class PhotoManager {
 
 	private static final int TAKE_PICTURE = 1;
-	private static final int SAVE_PICTURE = 2;
+	public static final String FILE_NAME_KEY = "FILE_NAME_KEY";
 
 	public void takePhoto(Activity activity) {
 		try {
@@ -34,11 +36,16 @@ public class PhotoManager {
 			}
 			File f = createImageFile();
 			Logger.log("Saving to file: " + f.getAbsolutePath());
+			getStorage(activity).edit().putString(FILE_NAME_KEY, f.getAbsolutePath()).commit();
 			captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
 			activity.startActivityForResult(captureIntent, TAKE_PICTURE);
 		} catch (Exception e) {
 			Logger.error("Failed to save picture", e);
 		}
+	}
+
+	private SharedPreferences getStorage(Activity activity) {
+		return activity.getPreferences(Context.MODE_PRIVATE);
 	}
 
 	public void dispatchActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
@@ -47,9 +54,21 @@ public class PhotoManager {
 				throw new Exception("Invalid action: " + requestCode);
 			}
 			if (resultCode == Activity.RESULT_OK) {
-				// Image captured and saved to fileUri specified in the Intent
-				Logger.log("Image saved to " + data);
-				handleSmallCameraPhoto(activity, data);
+				if (data != null) {
+					// Image captured and saved to fileUri specified in the Intent
+					Logger.log("Image saved to " + data);
+					handleSmallCameraPhoto(activity, data);
+				} else {
+					String fileName = getStorage(activity).getString(FILE_NAME_KEY, null);
+					if (fileName == null || fileName.isEmpty()) {
+						throw new Exception("File name undefined: '" + fileName + "'");
+					}
+					Bitmap bitmap = BitmapFactory.decodeFile(fileName);
+					if (bitmap == null) {
+						throw new Exception("Unable to decode image bitmap");
+					}
+					showImagePreview(activity, bitmap);
+				}
 			} else if (resultCode == Activity.RESULT_CANCELED) {
 				// User cancelled the image capture
 				Logger.log("User cancelled image input");
@@ -88,6 +107,10 @@ public class PhotoManager {
 		Bundle extras = intent.getExtras();
 		if (extras == null) return;
 		Bitmap bitmap = (Bitmap) extras.get("data");
+		showImagePreview(activity, bitmap);
+	}
+
+	private void showImagePreview(Activity activity, Bitmap bitmap) {
 		ImageView mImageView = (ImageView) activity.findViewById(R.id.imageView);
 		mImageView.setImageBitmap(bitmap);
 	}
