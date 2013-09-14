@@ -3,14 +3,18 @@ package com.ecwidizer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
+import com.ecwidizer.S3.S3Manager;
+import com.ecwidizer.S3.S3ManagerInitializeException;
 import com.ecwidizer.api.CreateProductRequest;
 import com.ecwidizer.api.ProductApiRequestor;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.io.File;
 
 public class Main extends Activity {
 
@@ -36,6 +40,7 @@ public class Main extends Activity {
 	}
 
 	public void takePhotoClicked(View view) {
+
         // Тестирование API. TODO: удалить сей говнокод
         Logger.log("TEST1");
         Logger.error("TEST1");
@@ -47,5 +52,19 @@ public class Main extends Activity {
         }.start();
 
 		photoManager.takePhoto(this);
-	}
+
+//        how to use S3Manager
+//        try {
+//            S3Manager s3Manager = S3Manager.getInstance(getApplicationContext());
+//            s3Manager.uploadToS3(new File("/mnt/sdcard/4.jpg"), new S3Manager.ImageUploadedConsumer() {
+//                @Override
+//                public void imageUploaded(String imageUri) {
+//                    Logger.log("image " + imageUri + " uploaded");
+//                }
+//            });
+//        } catch (S3ManagerInitializeException e) {
+//            e.printStackTrace();
+//        }
+//
+    }
 }
