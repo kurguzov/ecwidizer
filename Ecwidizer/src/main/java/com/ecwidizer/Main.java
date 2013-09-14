@@ -52,12 +52,7 @@ public class Main extends FragmentActivity {
 		@Override
 		public void imageUploaded(String imageUri) {
             Logger.log("Image uploaded to S3: " + imageUri);
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    setBusy(false);
-                }
-            });
-
+            setBusy(false);
             Main.this.imageUrl = imageUri;
         }
 	}
@@ -126,12 +121,19 @@ public class Main extends FragmentActivity {
 
 	public void addProductClicked(View view) {
         Logger.log("ADD PRODUCT BUTTON");
+        setBusy(true);
 
         final CreateProductRequest req = new CreateProductRequest();
         req.ownerid = 3111011;
         req.name = ((TextView) findViewById(R.id.productNameText)).getText().toString();
         req.description = null;
-        req.price = 6.66;
+
+        String priceStr = ((TextView) findViewById(R.id.productPriceText)).getText().toString();
+        try {
+            req.price = Double.parseDouble(priceStr);
+        } catch (NumberFormatException e) {
+            Logger.error("Жжош!", e);
+        }
         req.weight = 123.456;
         req.images = Arrays.asList(imageUrl);
 
@@ -140,14 +142,11 @@ public class Main extends FragmentActivity {
             public void run() {
                 try {
                     new ProductApiRequestor().createProduct(req);
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							clearFields();
-						}
-					});
+                    clearFields();
                 } catch (IOException e) {
                     Logger.error("Платформа - ебаное говно, живи с этим.", e);
+                } finally {
+                    setBusy(false);
                 }
             }
         };
@@ -155,15 +154,24 @@ public class Main extends FragmentActivity {
 	}
 
 	private void clearFields() {
-		ImageView mImageView = (ImageView) findViewById(R.id.imageView);
-		mImageView.setImageBitmap(null);
-		imageUrl = null;
-		((TextView) findViewById(R.id.productNameText)).setText("");
-		((TextView) findViewById(R.id.productPriceText)).setText("");
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ImageView mImageView = (ImageView) findViewById(R.id.imageView);
+                mImageView.setImageBitmap(null);
+                imageUrl = null;
+                ((TextView) findViewById(R.id.productNameText)).setText("");
+                ((TextView) findViewById(R.id.productPriceText)).setText("");
+            }
+        });
 	}
 
-	private void setBusy(boolean busy) {
-        findViewById(R.id.addProductButton).setEnabled(!busy);
-        findViewById(R.id.loadingIndicator).setVisibility(busy? View.VISIBLE : View.INVISIBLE);
+	private void setBusy(final boolean busy) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                findViewById(R.id.addProductButton).setEnabled(!busy);
+                findViewById(R.id.loadingIndicator).setVisibility(busy ? View.VISIBLE : View.INVISIBLE);
+            }
+        });
     }
 }
