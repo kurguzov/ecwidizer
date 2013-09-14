@@ -145,7 +145,7 @@ public class Main extends FragmentActivity {
                     new ProductApiRequestor().createProduct(req);
                     clearFields();
                     try {
-                        Thread.sleep(Math.max(0, 2000-(System.currentTimeMillis()-start)));
+                        Thread.sleep(Math.max(1, 2000-(System.currentTimeMillis()-start)));
                     } catch (InterruptedException e) {
                     }
                 } catch (IOException e) {
