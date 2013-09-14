@@ -33,6 +33,7 @@ public class Main extends FragmentActivity {
 	class ImageSaver implements PhotoManager.SaveImageCallback, S3Manager.ImageUploadedConsumer {
 		@Override
 		public void onSuccess(String filename) {
+            setBusy(true);
 			try {
 				S3Manager.getInstance(getApplicationContext()).uploadToS3(new File(filename), this);
 			} catch (S3ManagerInitializeException e) {
@@ -47,7 +48,13 @@ public class Main extends FragmentActivity {
 
 		@Override
 		public void imageUploaded(String imageUri) {
-			Logger.log("Image uploaded to S3: " + imageUri);
+            Logger.log("Image uploaded to S3: " + imageUri);
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    setBusy(false);
+                }
+            });
+
 			CreateProductRequest req = new CreateProductRequest();
             req.ownerid = 4;
             req.name = "Заебеквидов продукт №"+System.currentTimeMillis();
@@ -58,9 +65,8 @@ public class Main extends FragmentActivity {
             try {
                 new ProductApiRequestor().createProduct(req);
             } catch (IOException e) {
-                Logger.error("aaaaa", e);
+                Logger.error("Could not create product", e);
             }
-
         }
 	}
 
@@ -68,6 +74,7 @@ public class Main extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+        setBusy(false);
 	}
 
 	@Override
@@ -101,7 +108,6 @@ public class Main extends FragmentActivity {
 
     public void takePhotoClicked(View view) {
 		photoManager.takePhoto(this);
-
     }
 
 	public void setProductThumbnail(Bitmap bitmap) {
@@ -128,4 +134,9 @@ public class Main extends FragmentActivity {
 	public void addProductClicked(View view) {
 
 	}
+
+    private void setBusy(boolean busy) {
+        findViewById(R.id.addProductButton).setEnabled(!busy);
+        findViewById(R.id.loadingIndicator).setVisibility(busy? View.VISIBLE : View.INVISIBLE);
+    }
 }

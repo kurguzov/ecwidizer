@@ -99,7 +99,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:id="@+id/loadingIndicator"
-                    android:background="@drawable/ic_launcher"
+                    android:background="@drawable/activity_indicator"
                     android:paddingRight="@dimen/activity_vertical_margin"
                     android:gravity="center"/>
 
