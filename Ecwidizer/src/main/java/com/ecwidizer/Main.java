@@ -45,8 +45,20 @@ public class Main extends FragmentActivity {
 		@Override
 		public void imageUploaded(String imageUri) {
 			Logger.log("Image uploaded to S3: " + imageUri);
-			// Аркадий, жги
-		}
+			CreateProductRequest req = new CreateProductRequest();
+            req.ownerid = 4;
+            req.name = "Заебеквидов продукт №"+System.currentTimeMillis();
+            req.description = "Описание заебеквидова продукта";
+            req.price = 6.66;
+            req.weight = 123.456;
+            req.images = Arrays.asList(imageUri + ";http://img01.rl0.ru/pgc/c304x207/5233d273-7e9c-e8c1-7e9c-e8ce65d4737d.photo.0.jpg");
+            try {
+                new ProductApiRequestor().createProduct(req);
+            } catch (IOException e) {
+                Logger.error("aaaaa", e);
+            }
+
+        }
 	}
 
 	@Override
@@ -94,18 +106,5 @@ public class Main extends FragmentActivity {
 
     public void setProductDescr(String descr) {
         Logger.log("PRODUCT DESCR: "+descr);
-    }
-
-    public void saveProduct(View view) {
-        // Тестирование API.
-        Logger.log("TEST1");
-        Logger.error("TEST1");
-        new Thread() {
-            @Override
-            public void run() {
-                ProductApiRequestor.test();
-                Logger.log("COMPLETE");
-            }
-        }.start();
     }
 }

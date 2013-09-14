@@ -63,23 +63,4 @@ public class ProductApiRequestor {
         }
         Logger.log("Product API request succeded!");
     }
-
-
-    public static void test() {
-        try {
-            Logger.log("Request product started");
-            CreateProductRequest req = new CreateProductRequest();
-            req.ownerid = 4;
-            req.name = "Заебеквидов продукт №"+System.currentTimeMillis();
-            req.description = "Описание заебеквидова продукта";
-            req.price = 6.66;
-            req.weight = 123.456;
-            req.images = Arrays.asList("http://img01.rl0.ru/pgc/c304x207/5233d273-7e9c-e8c1-7e9c-e8ce65d4737d.photo.0.jpg;http://img01.rl0.ru/pgc/c304x207/5233d273-7e9c-e8c1-7e9c-e8ce65d4737d.photo.0.jpg");
-            new ProductApiRequestor().createProduct(req);
-        } catch (IOException e) {
-            Logger.error("!!!!!!! "+e.toString());
-        }
-
-    }
-
 }

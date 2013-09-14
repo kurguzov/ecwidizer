@@ -39,14 +39,4 @@
         android:onClick="captureProductName"
          />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:id="@+id/saveButton"
-        android:background="@drawable/ic_launcher"
-        android:onClick="saveProduct"
-         />
-
-
 </LinearLayout>
