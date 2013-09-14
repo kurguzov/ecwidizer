@@ -110,7 +110,7 @@ public class Main extends FragmentActivity {
 
     public void setProductName(String name) {
         Logger.log("PRODUCT NAME: "+name);
-        ((TextView) findViewById(R.id.productNameText)).setText(name);
+        ((TextView) findViewById(R.id.productNameText)).setText(capitalize(name));
     }
 
     public void captureProductDescr(View view) {
@@ -178,6 +178,14 @@ public class Main extends FragmentActivity {
 			}
 		});
 	}
+
+    private String capitalize(String s) {
+        if (s.isEmpty()) {
+            return s;
+        } else {
+            return Character.toUpperCase(s.charAt(0)) + s.substring(1);
+        }
+    }
 
 	private void setBusy(final boolean busy) {
         runOnUiThread(new Runnable() {
