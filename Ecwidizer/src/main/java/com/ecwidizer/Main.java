@@ -6,6 +6,12 @@ import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 
+import com.ecwidizer.api.CreateProductRequest;
+import com.ecwidizer.api.ProductApiRequestor;
+
+import java.io.IOException;
+import java.util.Arrays;
+
 public class Main extends Activity {
 
 	private PhotoManager photoManager = new PhotoManager();
@@ -30,6 +36,16 @@ public class Main extends Activity {
 	}
 
 	public void takePhotoClicked(View view) {
+        // Тестирование API. TODO: удалить сей говнокод
+        Logger.log("TEST1");
+        Logger.error("TEST1");
+        new Thread() {
+            @Override
+            public void run() {
+                ProductApiRequestor.test();
+            }
+        }.start();
+
 		photoManager.takePhoto(this);
 	}
 }
