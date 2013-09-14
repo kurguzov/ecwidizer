@@ -124,4 +124,8 @@ public class Main extends FragmentActivity {
     public void setProductDescr(String descr) {
         Logger.log("PRODUCT DESCR: "+descr);
     }
+
+	public void addProductClicked(View view) {
+
+	}
 }
