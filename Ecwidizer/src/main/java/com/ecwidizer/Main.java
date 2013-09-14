@@ -20,6 +20,8 @@ import com.ecwidizer.api.VoiceManager;
 import java.io.IOException;
 import java.util.Arrays;
 import java.io.File;
+
+
 public class Main extends FragmentActivity {
 
 	private final PhotoManager photoManager = new PhotoManager();
