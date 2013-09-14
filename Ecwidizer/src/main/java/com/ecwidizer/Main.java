@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,8 +18,7 @@ import com.ecwidizer.api.ProductApiRequestor;
 import java.io.IOException;
 import java.util.Arrays;
 import java.io.File;
-
-public class Main extends Activity {
+public class Main extends FragmentActivity {
 
 	private PhotoManager photoManager = new PhotoManager();
 
@@ -67,6 +67,8 @@ public class Main extends Activity {
 	}
 
 	public void takePhotoClicked(View view) {
+//        SettingsDialogFragment settingsDialogFragment = new SettingsDialogFragment();
+//        settingsDialogFragment.show(getSupportFragmentManager(), "Settings");
 
 //        // Тестирование API. TODO: удалить сей говнокод
 //        Logger.log("TEST1");
@@ -86,5 +88,4 @@ public class Main extends Activity {
 		ImageView mImageView = (ImageView) findViewById(R.id.imageView);
 		mImageView.setImageBitmap(bitmap);
 	}
-
 }

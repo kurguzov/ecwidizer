@@ -3,6 +3,14 @@
 
     <string name="app_name">Ecwidizer</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="store_id">Store id</string>
+    <string name="store_key">Store key</string>
+    <string name="dialog_settings">Settings</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="settings_header">Set up your store</string>
+    <string name="prop_store_id">store_id</string>
+    <string name="prop_store_key">store_key</string>
+
 
 </resources>
