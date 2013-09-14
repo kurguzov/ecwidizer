@@ -63,7 +63,6 @@ public class Main extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-        Logger.error(capitalize("заглавные буквы"));
         setBusy(false);
 	}
 
