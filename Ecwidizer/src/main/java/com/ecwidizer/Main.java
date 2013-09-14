@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ecwidizer.S3.S3Manager;
 import com.ecwidizer.S3.S3ManagerInitializeException;
@@ -26,6 +27,8 @@ public class Main extends FragmentActivity {
 
 	private final PhotoManager photoManager = new PhotoManager();
     private final VoiceManager voiceManager = new VoiceManager();
+
+    private String imageUrl;
 
 	/**
 	 * Обработчик сохранения картинки
@@ -55,18 +58,7 @@ public class Main extends FragmentActivity {
                 }
             });
 
-			CreateProductRequest req = new CreateProductRequest();
-            req.ownerid = 4;
-            req.name = "Заебеквидов продукт №"+System.currentTimeMillis();
-            req.description = "Описание заебеквидова продукта";
-            req.price = 6.66;
-            req.weight = 123.456;
-            req.images = Arrays.asList(imageUri + ";http://img01.rl0.ru/pgc/c304x207/5233d273-7e9c-e8c1-7e9c-e8ce65d4737d.photo.0.jpg");
-            try {
-                new ProductApiRequestor().createProduct(req);
-            } catch (IOException e) {
-                Logger.error("Could not create product", e);
-            }
+            Main.this.imageUrl = imageUri;
         }
 	}
 
@@ -121,6 +113,7 @@ public class Main extends FragmentActivity {
 
     public void setProductName(String name) {
         Logger.log("PRODUCT NAME: "+name);
+        ((TextView) findViewById(R.id.productNameText)).setText(name);
     }
 
     public void captureProductDescr(View view) {
@@ -132,7 +125,27 @@ public class Main extends FragmentActivity {
     }
 
 	public void addProductClicked(View view) {
+        Logger.log("ADD PRODUCT BUTTON");
 
+        final CreateProductRequest req = new CreateProductRequest();
+        req.ownerid = 3111011;
+        req.name = ((TextView) findViewById(R.id.productNameText)).getText().toString();
+        req.description = null;
+        req.price = 6.66;
+        req.weight = 123.456;
+        req.images = Arrays.asList(imageUrl);
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    new ProductApiRequestor().createProduct(req);
+                } catch (IOException e) {
+                    Logger.error("Платформа - ебаное говно, живи с этим.", e);
+                }
+            }
+        };
+        thread.start();
 	}
 
     private void setBusy(boolean busy) {
