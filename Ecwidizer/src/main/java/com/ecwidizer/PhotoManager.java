@@ -104,7 +104,9 @@ public class PhotoManager {
 			storageDir.mkdir();
 		}
 		Logger.log("storageDir: " + storageDir.getAbsolutePath() + "=>" + storageDir.isDirectory());
-		if (!storageDir.isDirectory()) return null;
+		if (!storageDir.isDirectory()) {
+			throw new IOException("Unable to create directory '" + storageDir.getAbsolutePath() + "'");
+		}
 
 		File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 		return image;
