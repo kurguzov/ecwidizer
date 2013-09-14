@@ -17,7 +17,7 @@ public class Logger {
 		Log.e(ECWIDIZER, message);
 	}
 
-	public static void error(String message, Exception e) {
+	public static void error(String message, Throwable e) {
 		Log.e(ECWIDIZER, message, e);
 	}
 

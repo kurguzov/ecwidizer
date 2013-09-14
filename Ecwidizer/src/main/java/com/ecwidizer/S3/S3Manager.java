@@ -32,7 +32,7 @@ public class S3Manager {
 
     public interface ImageUploadedConsumer {
         public void imageUploaded(String imageUri);
-		public void onFailure(Exception e);
+		public void onFailure(Throwable e);
     }
 
     public static S3Manager getInstance(Context context) throws S3ManagerInitializeException {
@@ -85,7 +85,7 @@ public class S3Manager {
                     s3Client.putObject(putObjectRequest);
                     Logger.log("Image successfully uploaded " + "http://s3.amazonaws.com/" + bucketName + "/" + imageName);
 					consumer.imageUploaded("http://s3.amazonaws.com/" + bucketName + "/" + imageName);
-                } catch (Exception e) {
+                } catch (Throwable e) {
 					consumer.onFailure(e);
                 }
             }

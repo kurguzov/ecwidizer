@@ -39,8 +39,8 @@ public class Main extends FragmentActivity {
 		}
 
 		@Override
-		public void onFailure(Exception e) {
-			Logger.error("Failed to save image", e);
+		public void onFailure(Throwable e) {
+			Logger.error("Failed to save image: " + e.getMessage(), e);
 		}
 
 		@Override

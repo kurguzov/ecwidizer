@@ -31,7 +31,7 @@ public class PhotoManager {
 
 	public interface SaveImageCallback {
 		void onSuccess(String filename);
-		void onFailure(Exception e);
+		void onFailure(Throwable e);
 	}
 
 	public void takePhoto(Activity activity) {
