@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.widget.ImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,7 +68,8 @@ public class PhotoManager {
 					if (fileName == null || fileName.isEmpty()) {
 						throw new Exception("File name undefined: '" + fileName + "'");
 					}
-					Bitmap bitmap = BitmapFactory.decodeFile(fileName);
+					Bitmap bitmap = loadImage(fileName);
+
 					if (bitmap == null) {
 						throw new Exception("Unable to decode image bitmap");
 					}
@@ -86,6 +86,19 @@ public class PhotoManager {
 		} catch (Exception e) {
 			callback.onFailure(e);
 		}
+	}
+
+	private Bitmap loadImage(String imgPath) {
+		BitmapFactory.Options options;
+		try {
+			options = new BitmapFactory.Options();
+			options.inSampleSize = 2;
+			Bitmap bitmap = BitmapFactory.decodeFile(imgPath, options);
+			return bitmap;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private File createImageFile() throws IOException {
