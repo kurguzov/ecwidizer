@@ -63,6 +63,7 @@ public class Main extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+        Logger.error(capitalize("заглавные буквы"));
         setBusy(false);
 	}
 
@@ -109,8 +110,9 @@ public class Main extends FragmentActivity {
     }
 
     public void setProductName(String name) {
+        name = capitalize(name);
         Logger.log("PRODUCT NAME: "+name);
-        ((TextView) findViewById(R.id.productNameText)).setText(capitalize(name));
+        ((TextView) findViewById(R.id.productNameText)).setText(name);
     }
 
     public void captureProductDescr(View view) {
