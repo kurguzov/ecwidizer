@@ -8,9 +8,11 @@
     <string name="dialog_settings">Settings</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
-    <string name="settings_header">Set up your store</string>
+    <string name="settings_header">Store configuration</string>
     <string name="prop_store_id">store_id</string>
     <string name="prop_store_key">store_key</string>
+    <string name="action_search">aaa</string>
+    <string name="action_compose">bbb</string>
 
 
 </resources>

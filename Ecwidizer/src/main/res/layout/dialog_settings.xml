@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
     <TextView
             android:layout_height="64dp"
@@ -14,8 +14,8 @@
             android:textStyle="bold"
             />
     <EditText
-            android:id="@+id/username"
-            android:inputType="text"
+            android:id="@+id/store_id"
+            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -24,7 +24,7 @@
             android:layout_marginBottom="4dp"
             android:hint="@string/store_id" />
     <EditText
-            android:id="@+id/password"
+            android:id="@+id/store_key"
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

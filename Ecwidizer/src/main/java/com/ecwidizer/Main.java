@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -76,15 +77,40 @@ public class Main extends FragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
-	public void takePhotoClicked(View view) {
-//        SettingsDialogFragment settingsDialogFragment = new SettingsDialogFragment();
-//        settingsDialogFragment.show(getSupportFragmentManager(), "Settings");
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                openSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openSettings() {
+        SettingsDialogFragment settingsDialogFragment = new SettingsDialogFragment();
+        settingsDialogFragment.show(getSupportFragmentManager(), "Settings");
+    }
+
+    public void takePhotoClicked(View view) {
+
+//        // Тестирование API. TODO: удалить сей говнокод
+//        Logger.log("TEST1");
+//        Logger.error("TEST1");
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                ProductApiRequestor.test();
+//            }
+//        }.start();
+//
 		photoManager.takePhoto(this);
+
     }
 
 	public void setProductThumbnail(Bitmap bitmap) {
