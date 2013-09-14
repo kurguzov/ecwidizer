@@ -1,11 +1,13 @@
 package com.ecwidizer;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.ecwidizer.S3.S3Manager;
 import com.ecwidizer.S3.S3ManagerInitializeException;
@@ -79,5 +81,10 @@ public class Main extends Activity {
 		photoManager.takePhoto(this);
 
     }
+
+	public void setProductThumbnail(Bitmap bitmap) {
+		ImageView mImageView = (ImageView) findViewById(R.id.imageView);
+		mImageView.setImageBitmap(bitmap);
+	}
 
 }
