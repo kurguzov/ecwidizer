@@ -98,17 +98,6 @@ public class Main extends FragmentActivity {
     }
 
     public void takePhotoClicked(View view) {
-
-//        // Тестирование API. TODO: удалить сей говнокод
-//        Logger.log("TEST1");
-//        Logger.error("TEST1");
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                ProductApiRequestor.test();
-//            }
-//        }.start();
-//
 		photoManager.takePhoto(this);
 
     }
