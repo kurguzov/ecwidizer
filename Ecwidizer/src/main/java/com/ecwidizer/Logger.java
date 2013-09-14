@@ -20,4 +20,8 @@ public class Logger {
 	public static void error(String message, Exception e) {
 		Log.e(ECWIDIZER, message, e);
 	}
+
+	public static void kernelPanic(String message) {
+		Log.e(ECWIDIZER, "Kernel Panic!!! " + message);
+	}
 }
