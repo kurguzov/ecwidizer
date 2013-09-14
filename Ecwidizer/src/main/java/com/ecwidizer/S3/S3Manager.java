@@ -32,6 +32,7 @@ public class S3Manager {
 
     public interface ImageUploadedConsumer {
         public void imageUploaded(String imageUri);
+		public void onFailure(Exception e);
     }
 
     public static S3Manager getInstance(Context context) throws S3ManagerInitializeException {
@@ -54,8 +55,8 @@ public class S3Manager {
             secretKey = properties.getProperty("secretKey");
             bucketName = properties.getProperty("bucketname");
             s3Client = new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey));
-        } catch (Exception e) {
-            throw new S3ManagerInitializeException("Can't initialize S3Manager");
+        } catch (Throwable e) {
+            throw new S3ManagerInitializeException("Can't initialize S3Manager", e);
         }
         Logger.log("S3 Manager is initialized");
     }
@@ -83,13 +84,10 @@ public class S3Manager {
                     putObjectRequest.setMetadata(objectMetadata);
                     s3Client.putObject(putObjectRequest);
                     Logger.log("Image successfully uploaded " + "http://s3.amazonaws.com/" + bucketName + "/" + imageName);
+					consumer.imageUploaded("http://s3.amazonaws.com/" + bucketName + "/" + imageName);
                 } catch (Exception e) {
-                    consumer.imageUploaded(null);
-                    Logger.error("Image upload failed", e);
-                    return;
+					consumer.onFailure(e);
                 }
-                consumer.imageUploaded("http://s3.amazonaws.com/" + bucketName + "/" + imageName);
-
             }
         }.start();
     }

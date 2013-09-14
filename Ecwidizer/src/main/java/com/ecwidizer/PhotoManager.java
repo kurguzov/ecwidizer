@@ -27,6 +27,12 @@ public class PhotoManager {
 
 	private static final int TAKE_PICTURE = 1;
 	public static final String FILE_NAME_KEY = "FILE_NAME_KEY";
+	public static final String ECWID_PHOTOS_DIRNAME = "ecwid-photos";
+
+	public interface SaveImageCallback {
+		void onSuccess(String filename);
+		void onFailure(Exception e);
+	}
 
 	public void takePhoto(Activity activity) {
 		try {
@@ -48,7 +54,7 @@ public class PhotoManager {
 		return activity.getPreferences(Context.MODE_PRIVATE);
 	}
 
-	public void dispatchActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+	public void dispatchActivityResult(Activity activity, int requestCode, int resultCode, Intent data, SaveImageCallback callback) {
 		try {
 			if (requestCode != TAKE_PICTURE) {
 				throw new Exception("Invalid action: " + requestCode);
@@ -68,6 +74,7 @@ public class PhotoManager {
 						throw new Exception("Unable to decode image bitmap");
 					}
 					showImagePreview(activity, bitmap);
+					callback.onSuccess(fileName);
 				}
 			} else if (resultCode == Activity.RESULT_CANCELED) {
 				// User cancelled the image capture
@@ -77,7 +84,7 @@ public class PhotoManager {
 				throw new Exception("Invalid result code: " + requestCode);
 			}
 		} catch (Exception e) {
-			Logger.error("Unable to dispatch activity result #" + requestCode, e);
+			callback.onFailure(e);
 		}
 	}
 
@@ -90,7 +97,7 @@ public class PhotoManager {
 				Environment.getExternalStoragePublicDirectory(
 						Environment.DIRECTORY_PICTURES
 				),
-				"ecwid-photos"
+				ECWID_PHOTOS_DIRNAME
 		);
 		if (!storageDir.exists()) {
 			Logger.log("storageDir " + storageDir.getAbsolutePath() + " doesn't exist, creating...");
