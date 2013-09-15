@@ -168,7 +168,7 @@ public class Main extends FragmentActivity {
 				try {
 					ImageView mImageView = (ImageView) findViewById(R.id.imageView);
 					mImageView.setImageBitmap(null);
-					mImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
+					mImageView.setImageDrawable(getResources().getDrawable(R.drawable.camera_small));
 
 					imageUrl = null;
 					((TextView) findViewById(R.id.productNameText)).setText("");

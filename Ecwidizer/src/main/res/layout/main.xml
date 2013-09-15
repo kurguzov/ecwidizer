@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="fill_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical"
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center"
             android:paddingLeft="50dp"
@@ -34,12 +34,16 @@
                 android:paddingBottom="30dp"/>
 
             <com.ecwidizer.DynamicImageView
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 android:id="@+id/imageView"
                 android:src="@drawable/camera_small"
-                android:onClick="takePhotoClicked"/>
+                android:onClick="takePhotoClicked"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -47,15 +51,15 @@
                 android:layout_gravity="center"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                >
+                android:paddingBottom="@dimen/activity_vertical_margin">
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:id="@+id/productNameText"
-                    android:text="@string/product_name"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/product_name"
                     android:layout_gravity="center_vertical|left"/>
 
                 <Button
@@ -74,14 +78,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/productPriceText"
                 android:layout_gravity="center|left"
-                android:text="@string/product_description"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 android:hint="@string/product_price"
                 android:numeric="decimal"/>
 
             <LinearLayout
-                android:layout_width="670dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
