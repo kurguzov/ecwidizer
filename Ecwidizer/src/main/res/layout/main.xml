@@ -63,7 +63,7 @@
                     android:layout_height="100dp"
                     android:text=""
                     android:id="@+id/captureProductName"
-                    android:background="@drawable/ic_launcher"
+                    android:background="@android:drawable/ic_btn_speak_now"
                     android:onClick="captureProductName"
                     android:layout_gravity="center_vertical|right"
                     />
