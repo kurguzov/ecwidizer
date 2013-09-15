@@ -1,5 +1,6 @@
 package com.ecwidizer;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -147,13 +148,12 @@ public class Main extends FragmentActivity {
                 try {
                     new ProductApiRequestor().createProduct(req);
                     clearFields();
-                    try {
-                        Thread.sleep(Math.max(1, 2000-(System.currentTimeMillis()-start)));
-                    } catch (InterruptedException e) {
-                    }
                 } catch (IOException e) {
                     Logger.error("Платформа - ебаное говно, живи с этим.", e);
                 } finally {
+                    try {
+                        Thread.sleep(Math.max(1, 2000-(System.currentTimeMillis()-start)));
+                    } catch (InterruptedException e) { }
                     setBusy(false);
                 }
             }
