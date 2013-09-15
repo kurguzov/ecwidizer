@@ -1,6 +1,8 @@
 package com.ecwidizer;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -50,6 +52,7 @@ public class Main extends FragmentActivity {
 		@Override
 		public void onFailure(Throwable e) {
 			Logger.error("Failed to save image: " + e.getMessage(), e);
+			showErrorMessage("Failed to save image: " + e.getMessage());
 		}
 
 		@Override
@@ -58,6 +61,23 @@ public class Main extends FragmentActivity {
             setBusy(false);
             Main.this.imageUrl = imageUri;
         }
+	}
+
+	private void showErrorMessage(final String message) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				new AlertDialog.Builder(Main.this)
+						.setTitle("Error occured")
+						.setMessage(message)
+						.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								// VOID
+							}
+						})
+						.show();
+			}
+		});
 	}
 
 	@Override
@@ -97,8 +117,13 @@ public class Main extends FragmentActivity {
     }
 
     public void takePhotoClicked(View view) {
-		photoManager.takePhoto(this);
-    }
+		try {
+			photoManager.takePhoto(this);
+		} catch (Exception e) {
+			Logger.error("Failed to save picture", e);
+			showErrorMessage("Failed to save picture: " + e.getMessage());
+		}
+	}
 
 	public void setProductThumbnail(Bitmap bitmap) {
 		ImageView mImageView = (ImageView) findViewById(R.id.imageView);
