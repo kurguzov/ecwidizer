@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
-            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingTop="10dp"
             android:paddingBottom="@dimen/activity_vertical_margin"
             >
 
@@ -31,7 +31,8 @@
                 android:text="@string/add_product_title"
                 android:id="@+id/textView"
                 android:layout_gravity="center"
-                android:paddingBottom="30dp"/>
+                android:paddingBottom="20dp"
+                android:textSize="25dp" />
 
             <com.ecwidizer.DynamicImageView
                 android:layout_width="fill_parent"
