@@ -104,14 +104,9 @@
                     android:layout_marginRight="10dp"
                     android:gravity="center_vertical"/>
 
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/loadingIndicator"
-                    android:background="@drawable/activity_indicator"
-                    android:paddingRight="@dimen/activity_vertical_margin"
-                    android:gravity="center"/>
-
+                <ProgressBar android:id="@+id/loadingIndicator"
+                    android:visibility="invisible"
+                    style="@style/GenericProgressIndicator"/>
 
             </LinearLayout>
 
