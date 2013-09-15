@@ -114,7 +114,7 @@ public class PhotoManager {
 		);
 		if (!storageDir.exists()) {
 			Logger.log("storageDir " + storageDir.getAbsolutePath() + " doesn't exist, creating...");
-			storageDir.mkdir();
+			storageDir.mkdirs();
 		}
 		Logger.log("storageDir: " + storageDir.getAbsolutePath() + "=>" + storageDir.isDirectory());
 		if (!storageDir.isDirectory()) {
