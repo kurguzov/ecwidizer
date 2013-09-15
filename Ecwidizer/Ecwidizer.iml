@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.path="$MODULE_DIR$" external.system.id="GRADLE" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="SELECTED_BUILD_VARIANT" value="Debug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleDebug" />
+        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleTest" />
+        <option name="SOURCE_GEN_TASK_NAME" value="TODO" />
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
+      </configuration>
+    </facet>
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
         <option name="GRADLE_PROJECT_PATH" value=":Ecwidizer" />
-      </configuration>
-    </facet>
-    <facet type="android" name="Android">
-      <configuration>
-        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
-        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
-        <option name="LIBS_FOLDER_RELATIVE_PATH" value="/lib" />
       </configuration>
     </facet>
   </component>
@@ -50,7 +55,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/res" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/resources" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/build/apk" />
       <excludeFolder url="file://$MODULE_DIR$/build/assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/bundles" />
@@ -62,7 +66,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
-    <orderEntry type="jdk" jdkName="Android 4.0.3 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 15 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="support-v4-18.0.0" level="project" />
     <orderEntry type="library" exported="" name="ComAndroidSupportAppcompatV71800.aar" level="project" />
