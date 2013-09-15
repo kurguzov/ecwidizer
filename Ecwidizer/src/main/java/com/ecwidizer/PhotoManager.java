@@ -33,20 +33,16 @@ public class PhotoManager {
 		void onFailure(Throwable e);
 	}
 
-	public void takePhoto(Activity activity) {
-		try {
-			Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			if (!isIntentAvailable(activity.getApplicationContext(), captureIntent)) {
-				throw new Exception("Image Capture is not available");
-			}
-			File f = createImageFile();
-			Logger.log("Saving to file: " + f.getAbsolutePath());
-			getStorage(activity).edit().putString(FILE_NAME_KEY, f.getAbsolutePath()).commit();
-			captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-			activity.startActivityForResult(captureIntent, TAKE_PICTURE);
-		} catch (Exception e) {
-			Logger.error("Failed to save picture", e);
+	public void takePhoto(Activity activity) throws Exception {
+		Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		if (!isIntentAvailable(activity.getApplicationContext(), captureIntent)) {
+			throw new Exception("Image Capture is not available");
 		}
+		File f = createImageFile();
+		Logger.log("Saving to file: " + f.getAbsolutePath());
+		getStorage(activity).edit().putString(FILE_NAME_KEY, f.getAbsolutePath()).commit();
+		captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+		activity.startActivityForResult(captureIntent, TAKE_PICTURE);
 	}
 
 	private SharedPreferences getStorage(Activity activity) {
