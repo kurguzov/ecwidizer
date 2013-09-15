@@ -16,69 +16,33 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
             android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin">
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_product_title"
                 android:id="@+id/textView"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:paddingBottom="30dp"/>
 
             <com.ecwidizer.DynamicImageView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 android:id="@+id/imageView"
-                android:src="@drawable/ic_launcher"
+                android:layout_below="@+id/button"
+                android:layout_alignLeft="@+id/textView"
+                android:src="@drawable/camera"
                 android:background="@android:color/white"
-                android:onClick="takePhotoClicked"
-                android:focusable="true"
-                android:focusableInTouchMode="true"/>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|left"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin">
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/productNameText"
-                    android:layout_gravity="center_vertical|left"
-                    android:inputType="textCapSentences"
-                    android:layout_weight="1.0"
-                    android:hint="@string/product_name"/>
-
-                <Button
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:text=""
-                    android:id="@+id/captureProductName"
-                    android:background="@android:drawable/ic_btn_speak_now"
-                    android:onClick="captureProductName"
-                    android:layout_gravity="center_vertical|right"
-                    />
-            </LinearLayout>
-
-            <EditText
-                android:inputType="numberDecimal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/productPriceText"
-                android:layout_gravity="center|left"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:hint="@string/product_price"
-                android:numeric="decimal"/>
+                android:onClick="takePhotoClicked"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -87,22 +51,58 @@
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                android:gravity="right">
+                >
 
-                <Button
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/productNameText"
+                    android:text="@string/product_name"
+                    android:layout_gravity="center_vertical|left"/>
+
+                <Button
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:text=""
+                    android:id="@+id/captureProductName"
+                    android:background="@drawable/microphone_48"
+                    android:onClick="captureProductName"
+                    android:layout_gravity="center_vertical|right"/>
+            </LinearLayout>
+
+            <EditText
+                android:inputType="numberDecimal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/productPriceText"
+                android:layout_gravity="center|left"
+                android:text="@string/product_description"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:hint="@string/product_price"
+                android:numeric="decimal"/>
+
+            <LinearLayout
+                android:layout_width="670dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="100dp"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:gravity="center">
+                <Button
+                    android:layout_width="152dp"
+                    android:layout_height="39dp"
                     android:text=""
                     android:id="@+id/addProductButton"
-                    android:background="@drawable/ic_launcher"
+                    android:background="@drawable/upload_disabled"
                     android:onClick="addProductClicked"
-                    android:paddingLeft="@dimen/activity_vertical_margin"
-                    android:paddingRight="@dimen/activity_vertical_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
-                    android:layout_weight="0.8"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center_vertical"/>
+                    android:paddingLeft="200dp"
+                    android:paddingRight="200dp"
+                    android:paddingTop="200dp"
+                    android:paddingBottom="200dp"
+                    />
 
                 <ProgressBar android:id="@+id/loadingIndicator"
                     android:visibility="invisible"

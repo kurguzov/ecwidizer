@@ -16,5 +16,7 @@
     <string name="product_name">Product name</string>
     <string name="product_price">Product price</string>
     <string name="add_product_title">Add new product to Ecwid store</string>
+    <string name="product_description">Product description</string>
+
 
 </resources>
