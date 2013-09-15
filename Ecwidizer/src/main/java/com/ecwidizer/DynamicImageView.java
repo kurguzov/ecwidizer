@@ -3,12 +3,12 @@ package com.ecwidizer;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 
 /**
  * Created by igor on 9/15/13.
  */
-public class DynamicImageView extends ImageView {
+public class DynamicImageView extends ImageButton {
 
 	public DynamicImageView(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
