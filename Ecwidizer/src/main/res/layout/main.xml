@@ -26,22 +26,24 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/action_settings"
-                android:id="@+id/textView" />
+                android:text="@string/add_product_title"
+                android:id="@+id/textView"
+                android:layout_gravity="center"/>
 
-            <ImageView
-                android:layout_width="700dp"
-                android:layout_height="700dp"
+            <com.ecwidizer.DynamicImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 android:id="@+id/imageView"
                 android:layout_below="@+id/button"
                 android:layout_alignLeft="@+id/textView"
                 android:src="@drawable/ic_launcher"
                 android:background="@android:color/white"
-                android:onClick="takePhotoClicked"/>
+                android:onClick="takePhotoClicked"
+                android:adjustViewBounds="false"/>
 
             <LinearLayout
-                android:layout_width="700dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
                 android:orientation="horizontal"
@@ -49,10 +51,13 @@
                 android:paddingBottom="@dimen/activity_vertical_margin">
 
                 <EditText
-                    android:layout_width="600dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/productNameText"
-                    android:layout_gravity="center_vertical|left"/>
+                    android:layout_gravity="center_vertical|left"
+                    android:inputType="textCapSentences"
+                    android:layout_weight="1.0"
+                    android:hint="@string/product_name"/>
 
                 <Button
                     android:layout_width="100dp"
@@ -61,20 +66,23 @@
                     android:id="@+id/captureProductName"
                     android:background="@drawable/ic_launcher"
                     android:onClick="captureProductName"
-                    android:layout_gravity="center_vertical|right"/>
+                    android:layout_gravity="center_vertical|right"
+                    />
             </LinearLayout>
 
             <EditText
-                android:inputType="numberSigned"
-                android:layout_width="700dp"
+                android:inputType="numberDecimal"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/productPriceText"
                 android:layout_gravity="center|left"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"/>
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:hint="@string/product_price"
+                android:numeric="decimal"/>
 
             <LinearLayout
-                android:layout_width="670dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
@@ -83,8 +91,8 @@
                 android:gravity="right">
 
                 <Button
-                    android:layout_width="500dp"
-                    android:layout_height="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text=""
                     android:id="@+id/addProductButton"
                     android:background="@drawable/ic_launcher"
@@ -93,7 +101,9 @@
                     android:paddingRight="@dimen/activity_vertical_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:paddingBottom="@dimen/activity_vertical_margin"
-                    />
+                    android:layout_weight="0.8"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"/>
 
                 <ImageView
                     android:layout_width="100dp"

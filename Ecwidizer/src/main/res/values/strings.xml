@@ -13,6 +13,8 @@
     <string name="prop_store_key">store_key</string>
     <string name="action_search">aaa</string>
     <string name="action_compose">bbb</string>
-
+    <string name="product_name">Product name</string>
+    <string name="product_price">Product price</string>
+    <string name="add_product_title">Add new product to Ecwid store</string>
 
 </resources>
