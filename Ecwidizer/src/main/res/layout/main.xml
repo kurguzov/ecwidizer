@@ -41,7 +41,6 @@
                 android:layout_below="@+id/button"
                 android:layout_alignLeft="@+id/textView"
                 android:src="@drawable/camera"
-                android:background="@android:color/white"
                 android:onClick="takePhotoClicked"/>
 
             <LinearLayout
