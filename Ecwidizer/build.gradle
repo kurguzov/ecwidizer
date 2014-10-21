@@ -1,28 +1,24 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.5.+'
-    }
-}
-apply plugin: 'android'
-
-repositories {
-    mavenCentral()
-}
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 15
-    buildToolsVersion "18.0.1"
+    compileSdkVersion 17
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
+        applicationId "com.ecwid.Ecwidizer"
         minSdkVersion 10
-        targetSdkVersion 15
+        targetSdkVersion 17
+        versionCode 1
+        versionName "1.0"
     }
 }
 
 dependencies {
-	compile 'com.android.support:appcompat-v7:18.0.0'
-    compile fileTree(dir: "lib", include: "*.jar")
+    compile fileTree(dir: 'lib', include: '*.jar')
+    compile 'com.android.support:appcompat-v7:19.1.0'
+}
+
+
+dependencies {
+    compile 'com.google.android.gms:play-services:4.3.23'
 }
