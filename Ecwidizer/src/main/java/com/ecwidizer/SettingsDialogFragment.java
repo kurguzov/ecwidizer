@@ -26,13 +26,10 @@ public class SettingsDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                    SharedPreferences sharedPref = getActivity().getSharedPreferences(Main.SETTINGS_STORAGE, Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    EditText storeId = (EditText)view.findViewById(R.id.store_id);
-                    EditText storeKey = (EditText)view.findViewById(R.id.store_key);
-                    editor.putString(Main.SETTINGS_STORE_ID, storeId.getText().toString());
-                    editor.putString(Main.SETTINGS_TOKEN, storeKey.getText().toString());
-                    editor.apply();
+                    	EditText storeId = (EditText)view.findViewById(R.id.store_id);
+                    	EditText storeKey = (EditText)view.findViewById(R.id.store_key);
+						EcwidizerSettings.get().setStoreId(storeId.getText().toString());
+						EcwidizerSettings.get().setToken(storeKey.getText().toString());
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -41,8 +38,7 @@ public class SettingsDialogFragment extends DialogFragment {
 
                     }
                 });
-        SharedPreferences sharedPref = getActivity().getSharedPreferences(Main.SETTINGS_STORAGE, Context.MODE_PRIVATE);
-        SettingsDialogFragment.this.fillSettings(sharedPref.getString(Main.SETTINGS_STORE_ID, ""), sharedPref.getString(Main.SETTINGS_TOKEN, ""));
+        SettingsDialogFragment.this.fillSettings(EcwidizerSettings.get().getStoreId(), EcwidizerSettings.get().getToken());
 
         return builder.create();
     }
