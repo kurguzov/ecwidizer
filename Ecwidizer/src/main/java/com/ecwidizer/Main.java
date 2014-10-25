@@ -18,6 +18,7 @@ import com.ecwidizer.api.CreateProductRequest;
 import com.ecwidizer.api.ProductApiRequestor;
 import com.ecwidizer.api.VoiceManager;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Main extends FragmentActivity {
@@ -193,13 +194,16 @@ public class Main extends FragmentActivity {
             @Override
             public void run() {
                 long start = System.currentTimeMillis();
-                try {
+				try {
 					EcwidizerSettings settings = EcwidizerSettings.get();
 					new ProductApiRequestor(settings.getStoreId(), settings.getToken()).createProduct(req);
-                    clearFields();
-                } catch (Exception e) {
+					clearFields();
+				} catch (IOException e) {
+					Logger.error("Unable to reach Ecwid API", e);
+					showErrorMessage("Failed to create product. Ecwid returned error: " + e.getMessage());
+				} catch (Exception e) {
+					Logger.error("Unable to create product", e);
 					showErrorMessage("Failed to create product: " + e.getMessage());
-                    Logger.error("Платформа - ебаное говно, живи с этим.", e);
                 } finally {
                     try {
                         Thread.sleep(Math.max(1, 2000-(System.currentTimeMillis()-start)));
