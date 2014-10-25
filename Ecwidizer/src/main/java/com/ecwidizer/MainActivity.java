@@ -153,10 +153,17 @@ public class MainActivity extends FragmentActivity {
 
 	public void addProductClicked(View view) {
         Logger.log("ADD PRODUCT BUTTON");
-        setBusy(true);
+		TextView nameField = (TextView) findViewById(R.id.productNameText);
+		String nameValue = nameField.getText().toString();
+		if (nameValue.trim().isEmpty()) {
+			nameField.setError("Product name cannot be empty");
+			return;
+		}
 
-        final CreateProductRequest req = new CreateProductRequest();
-        req.name = ((TextView) findViewById(R.id.productNameText)).getText().toString();
+		setBusy(true);
+
+		final CreateProductRequest req = new CreateProductRequest();
+		req.name = nameValue;
 		req.sku = generateSKU();
 
 		req.description = null;
