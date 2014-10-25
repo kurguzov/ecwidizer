@@ -7,9 +7,9 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -45,31 +45,15 @@ public class ProductApiRequestor {
 	}
 
 	public Integer createProduct(CreateProductRequest request) throws IOException, JSONException {
-        List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		String endpoint = productsApiEndpoint.replace("{storeId}", storeId) + "?token=" + token;
 
-		parameters.add(new BasicNameValuePair("token", token));
+		String json = createNewProductJson(request);
 
-        if (request.name != null) {
-            parameters.add(new BasicNameValuePair("name", request.name));
-        }
-
-        if (request.description != null) {
-            parameters.add(new BasicNameValuePair("description", request.description));
-        }
-
-        if (request.price != null) {
-            parameters.add(new BasicNameValuePair("price", new DecimalFormat("#.###", new DecimalFormatSymbols(Locale.US)).format(request.price)));
-        }
-
-        if (request.weight != null) {
-            parameters.add(new BasicNameValuePair("weight", new DecimalFormat("#.###", new DecimalFormatSymbols(Locale.US)).format(request.weight)));
-        }
-
-        HttpClient client = new DefaultHttpClient();
-		String endpoint = productsApiEndpoint.replace("{storeId}", storeId);
+		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(endpoint);
-        post.setEntity(new UrlEncodedFormEntity(parameters, "UTF-8"));
-        Logger.log("Product API request: " + endpoint + "[" + parameters + "]");
+		post.setHeader("Content-Type", "application/json");
+		post.setEntity(new StringEntity(json, "UTF-8"));
+        Logger.log("Product API request: " + endpoint + " " + json);
         HttpResponse resp = client.execute(post);
         if (resp.getStatusLine().getStatusCode() != 200) {
 			JSONObject jObject = parseProductApiResponse(resp);
@@ -87,7 +71,32 @@ public class ProductApiRequestor {
         return productId;
     }
 
-    private JSONObject parseProductApiResponse(HttpResponse resp) throws IOException {
+	private String createNewProductJson(CreateProductRequest request) throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		if (request.sku != null) {
+			jsonObject.put("sku", request.sku);
+		}
+
+		if (request.name != null) {
+			jsonObject.put("name", request.name);
+		}
+
+		if (request.description != null) {
+			jsonObject.put("description", request.description);
+		}
+
+		if (request.price != null) {
+			jsonObject.put("price", request.price);
+		}
+
+		if (request.weight != null) {
+			jsonObject.put("weight", request.weight);
+		}
+
+		return jsonObject.toString();
+	}
+
+	private JSONObject parseProductApiResponse(HttpResponse resp) throws IOException {
         HttpEntity entity = resp.getEntity();
         InputStream stream = entity.getContent();
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));

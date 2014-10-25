@@ -166,7 +166,9 @@ public class Main extends FragmentActivity {
 
         final CreateProductRequest req = new CreateProductRequest();
         req.name = ((TextView) findViewById(R.id.productNameText)).getText().toString();
-        req.description = null;
+		req.sku = generateSKU();
+
+		req.description = null;
 
         String priceStr = ((TextView) findViewById(R.id.productPriceText)).getText().toString();
         try {
@@ -201,6 +203,10 @@ public class Main extends FragmentActivity {
             }
         };
         thread.start();
+	}
+
+	private String generateSKU() {
+		return "ECW-" + System.currentTimeMillis();
 	}
 
 	private void clearFields() {
