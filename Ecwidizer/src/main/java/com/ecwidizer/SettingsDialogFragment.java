@@ -1,6 +1,5 @@
 package com.ecwidizer;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -31,7 +30,7 @@ public class SettingsDialogFragment extends DialogFragment {
                     SharedPreferences.Editor editor = sharedPref.edit();
                     EditText storeId = (EditText)view.findViewById(R.id.store_id);
                     EditText storeKey = (EditText)view.findViewById(R.id.store_key);
-                    editor.putString(getString(R.string.store_id), storeId.getText().toString());
+                    editor.putString(Main.SETTINGS_STORE_ID, storeId.getText().toString());
                     editor.putString(getString(R.string.store_key), storeKey.getText().toString());
                     editor.commit();
 

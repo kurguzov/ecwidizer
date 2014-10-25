@@ -1,15 +1,13 @@
 package com.ecwidizer;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.app.Activity;
-import android.util.Log;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +28,7 @@ import java.io.File;
 
 public class Main extends FragmentActivity {
 
+	static final String SETTINGS_STORE_ID = "store_id";
 	private final PhotoManager photoManager = new PhotoManager();
     private final VoiceManager voiceManager = new VoiceManager();
 
@@ -85,6 +84,23 @@ public class Main extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
         setBusy(false);
+
+		if (!isConnectedWithEcwid()) {
+			Intent intent = new Intent(this, AuthorizeAppActivity.class);
+			startActivity(intent);
+		}
+	}
+
+	private boolean isConnectedWithEcwid() {
+		// проверим, настроен ли апп на магазин Ecwid
+		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+		int storeId = 0;
+		try {
+			storeId = Integer.parseInt(sharedPref.getString(SETTINGS_STORE_ID, ""));
+		} catch (NumberFormatException e) {
+			// похуй
+		}
+		return storeId > 0;
 	}
 
 	@Override
