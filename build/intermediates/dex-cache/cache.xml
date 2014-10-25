@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/alexis/Documents/Projects/ecwidizer/Ecwidizer/build/intermediates/pre-dexed/debug/classes-418fd965bfc7efae48e29299841c9acf4ecc7f4b.jar"
+        jar="/Users/alexis/Documents/Projects/ecwidizer/Ecwidizer/build/intermediates/exploded-aar/com.google.android.gms/play-services/4.3.23/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="7676c0cb230efa6ac41c47867d372ed5913029d4"/>
+    <item
+        dex="/Users/alexis/Documents/Projects/ecwidizer/Ecwidizer/build/intermediates/pre-dexed/debug/classes-b8a4e2248396f79d2d32d6ca75f41d838cf4556e.jar"
+        jar="/Users/alexis/Documents/Projects/ecwidizer/Ecwidizer/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="/Users/alexis/Documents/Projects/ecwidizer/Ecwidizer/build/intermediates/pre-dexed/debug/aws-android-sdk-1.6.1-s3-242b8db65749f81fdd37e2702390b01343b261b2.jar"
+        jar="/Users/alexis/Documents/Projects/ecwidizer/Ecwidizer/lib/aws-android-sdk-1.6.1-s3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="4a20d793995967e9e4b2d6b83d2af2854d43f80c"/>
+    <item
+        dex="/Users/alexis/Documents/Projects/ecwidizer/Ecwidizer/build/intermediates/pre-dexed/debug/aws-android-sdk-1.6.1-core-6a594bb0c32d0e2cfee9fb793ce3b6d64037c429.jar"
+        jar="/Users/alexis/Documents/Projects/ecwidizer/Ecwidizer/lib/aws-android-sdk-1.6.1-core.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="1f184379cbebcb10aaae36ec7ec23bd24ad291e7"/>
+    <item
+        dex="/Users/alexis/Documents/Projects/ecwidizer/Ecwidizer/build/intermediates/pre-dexed/debug/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
+        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+
+</pre-dex-items>
