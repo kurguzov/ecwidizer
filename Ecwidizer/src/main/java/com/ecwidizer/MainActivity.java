@@ -21,7 +21,7 @@ import com.ecwidizer.api.VoiceManager;
 
 import java.io.IOException;
 
-public class Main extends FragmentActivity {
+public class MainActivity extends FragmentActivity {
 
 	public static final String TAG = "ecwidizer";
 
@@ -36,7 +36,7 @@ public class Main extends FragmentActivity {
 	class ImageSaver implements PhotoManager.SaveImageCallback {
 		@Override
 		public void onSuccess(String filename) {
-			Main.this.imageFile = filename;
+			MainActivity.this.imageFile = filename;
 		}
 
 		@Override
@@ -51,7 +51,7 @@ public class Main extends FragmentActivity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				new AlertDialog.Builder(Main.this)
+				new AlertDialog.Builder(MainActivity.this)
 						.setTitle("Error occured")
 						.setMessage(message)
 						.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -184,7 +184,7 @@ public class Main extends FragmentActivity {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							Toast.makeText(Main.this, "Product successfully uploaded.", Toast.LENGTH_SHORT).show();
+							Toast.makeText(MainActivity.this, "Product successfully uploaded.", Toast.LENGTH_SHORT).show();
 						}
 					});
 				} catch (IOException e) {

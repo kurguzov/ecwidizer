@@ -58,7 +58,7 @@ public class PhotoManager {
 				if (data != null) {
 					// Image captured and saved to fileUri specified in the Intent
 					Logger.log("Image saved to " + data);
-					handleSmallCameraPhoto((Main)activity, data);
+					handleSmallCameraPhoto((MainActivity)activity, data);
 				} else {
 					String fileName = getStorage(activity).getString(FILE_NAME_KEY, null);
 					if (fileName == null || fileName.isEmpty()) {
@@ -69,7 +69,7 @@ public class PhotoManager {
 					if (bitmap == null) {
 						throw new Exception("Unable to decode image bitmap");
 					}
-					((Main)activity).setProductThumbnail(bitmap);
+					((MainActivity)activity).setProductThumbnail(bitmap);
 					callback.onSuccess(fileName);
 				}
 			} else if (resultCode == Activity.RESULT_CANCELED) {
@@ -121,7 +121,7 @@ public class PhotoManager {
 		return image;
 	}
 
-	private void handleSmallCameraPhoto(Main activity, Intent intent) {
+	private void handleSmallCameraPhoto(MainActivity activity, Intent intent) {
 		Bundle extras = intent.getExtras();
 		if (extras == null) return;
 		Bitmap bitmap = (Bitmap) extras.get("data");

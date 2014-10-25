@@ -33,7 +33,7 @@ public class OAuthAccessTokenActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        Log.i(Main.TAG, "Starting task to retrieve request token.");
+        Log.i(MainActivity.TAG, "Starting task to retrieve request token.");
         this.prefs = PreferenceManager.getDefaultSharedPreferences(this);
         oAuth2Helper = new OAuth2Helper(this.prefs);
         webview = new WebView(this);
@@ -42,7 +42,7 @@ public class OAuthAccessTokenActivity extends Activity {
         setContentView(webview);
         
         String authorizationUrl = oAuth2Helper.getAuthorizationUrl();
-        Log.i(Main.TAG, "Using authorizationUrl = " + authorizationUrl);
+        Log.i(MainActivity.TAG, "Using authorizationUrl = " + authorizationUrl);
         
         handled=false;
         
@@ -50,11 +50,11 @@ public class OAuthAccessTokenActivity extends Activity {
 
         	@Override  
             public void onPageStarted(WebView view, String url,Bitmap bitmap)  {  
-        		Log.d(Main.TAG, "onPageStarted : " + url + " handled = " + handled);
+        		Log.d(MainActivity.TAG, "onPageStarted : " + url + " handled = " + handled);
             }
         	@Override  
             public void onPageFinished(final WebView view, final String url)  {
-        		Log.d(Main.TAG, "onPageFinished : " + url + " handled = " + handled);
+        		Log.d(MainActivity.TAG, "onPageFinished : " + url + " handled = " + handled);
 		        //if (url.contains("/installedAppRedirect?")) {
         		if (url.startsWith(OAuth2Params.ECWID.getRedirectUri())) {
 	        		webview.setVisibility(View.INVISIBLE);
@@ -79,7 +79,7 @@ public class OAuthAccessTokenActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.i(Main.TAG, "onResume called with " + hasLoggedIn);
+		Log.i(MainActivity.TAG, "onResume called with " + hasLoggedIn);
 		if (hasLoggedIn) {
 			finish();
 		}
@@ -99,13 +99,13 @@ public class OAuthAccessTokenActivity extends Activity {
 		protected Void doInBackground(Uri...params) {
 			//if (url.contains("/installedAppRedirect?")) {
 			if (url.startsWith(OAuth2Params.ECWID.getRedirectUri())) {
-				Log.i(Main.TAG, "Redirect URL found" + url);
+				Log.i(MainActivity.TAG, "Redirect URL found" + url);
 				handled=true;
         		try {
         			if (url.indexOf("code=")!=-1) {
             			String authorizationCode = extractCodeFromUrl(url);
             			
-            			Log.i(Main.TAG, "Found code = " + authorizationCode);
+            			Log.i(MainActivity.TAG, "Found code = " + authorizationCode);
 						
             			oAuth2Helper.retrieveAndStoreAccessToken(authorizationCode);
             			startActivity=true;
@@ -120,7 +120,7 @@ public class OAuthAccessTokenActivity extends Activity {
 				}
 
         	} else {
-        		Log.i(Main.TAG, "Not doing anything for url " + url);
+        		Log.i(MainActivity.TAG, "Not doing anything for url " + url);
         	}
             return null;
 		}
@@ -142,7 +142,7 @@ public class OAuthAccessTokenActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void result) {
 			if (startActivity) {
-				Log.i(Main.TAG," ++++++++++++ Starting mainscreen again");
+				Log.i(MainActivity.TAG," ++++++++++++ Starting mainscreen again");
 				try {
 					EcwidizerSettings.get().setToken(oAuth2Helper.loadCredential().getAccessToken());
 				} catch (IOException e) {

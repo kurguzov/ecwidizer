@@ -3,8 +3,8 @@ package com.ecwidizer.oauth2;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.ecwidizer.MainActivity;
 import com.ecwidizer.oauth2.store.SharedPreferencesCredentialStore;
-import com.ecwidizer.Main;
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.ClientParametersAuthentication;
 import com.google.api.client.auth.oauth2.Credential;
@@ -60,13 +60,13 @@ public class OAuth2Helper {
 	}
 
 	public void retrieveAndStoreAccessToken(String authorizationCode) throws IOException {
-		Log.i(Main.TAG, "retrieveAndStoreAccessToken for code " + authorizationCode);
+		Log.i(MainActivity.TAG, "retrieveAndStoreAccessToken for code " + authorizationCode);
 		TokenResponse tokenResponse = flow.newTokenRequest(authorizationCode)
 				.setScopes(convertScopesToString(oauth2Params.getScope()))
 				.setRedirectUri(oauth2Params.getRedirectUri()).execute();
-		Log.i(Main.TAG, "Found tokenResponse:");
-		Log.i(Main.TAG, "Access Token: " + tokenResponse.getAccessToken());
-		Log.i(Main.TAG, "Refresh Token: " + tokenResponse.getRefreshToken());
+		Log.i(MainActivity.TAG, "Found tokenResponse:");
+		Log.i(MainActivity.TAG, "Access Token: " + tokenResponse.getAccessToken());
+		Log.i(MainActivity.TAG, "Refresh Token: " + tokenResponse.getRefreshToken());
 		flow.createAndStoreCredential(tokenResponse, oauth2Params.getUserId());
 	}
 

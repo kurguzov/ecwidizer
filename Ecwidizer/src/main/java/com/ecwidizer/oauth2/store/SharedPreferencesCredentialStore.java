@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
-import com.ecwidizer.Main;
+import com.ecwidizer.MainActivity;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.CredentialStore;
 
@@ -36,8 +36,8 @@ public class SharedPreferencesCredentialStore implements CredentialStore {
 	 */
 	public boolean load(String userId, Credential credential)
 			throws IOException {
-		Log.i(Main.TAG,"Loading credential for userId " + userId);
-		Log.i(Main.TAG,"Loaded access token = "  + prefs.getString(userId + ACCESS_TOKEN, ""));
+		Log.i(MainActivity.TAG,"Loading credential for userId " + userId);
+		Log.i(MainActivity.TAG,"Loaded access token = "  + prefs.getString(userId + ACCESS_TOKEN, ""));
 		
 		credential.setAccessToken(prefs.getString(userId + ACCESS_TOKEN, null));
 		
@@ -58,8 +58,8 @@ public class SharedPreferencesCredentialStore implements CredentialStore {
 	 * Google APIs usually return both an access token, refresh token and expiriation info.
 	 */
 	public void store(String userId, Credential credential) throws IOException {
-		Log.i(Main.TAG,"Storing credential for userId " + userId);
-		Log.i(Main.TAG,"Access Token = " + credential.getAccessToken());
+		Log.i(MainActivity.TAG,"Storing credential for userId " + userId);
+		Log.i(MainActivity.TAG,"Access Token = " + credential.getAccessToken());
 		Editor editor = prefs.edit();
 		
 		editor.putString(userId + ACCESS_TOKEN,credential.getAccessToken());
@@ -80,7 +80,7 @@ public class SharedPreferencesCredentialStore implements CredentialStore {
 	 * 
 	 */
 	public void delete(String userId, Credential credential) throws IOException {
-		Log.i(Main.TAG,"Deleting credential for userId " + userId);
+		Log.i(MainActivity.TAG,"Deleting credential for userId " + userId);
 		Editor editor = prefs.edit();
 		editor.remove(userId + ACCESS_TOKEN);
 		editor.remove(userId + EXPIRES_IN);

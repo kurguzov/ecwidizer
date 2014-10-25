@@ -11,7 +11,8 @@ import java.util.Properties;
  */
 public class EcwidizerSettings {
 
-	public static final String APPLICATION_PROPERTIES_FILE = "application.properties";
+	private static final String APPLICATION_PROPERTIES_FILE = "application.properties";
+	private static final String ECWID_API_ENDPOINT = "ecwid.api_endpoint";
 	private static EcwidizerSettings INSTANCE;
 
 	private final String SETTINGS_STORAGE = "ecwidizer-preferences";
@@ -71,6 +72,6 @@ public class EcwidizerSettings {
 	}
 
 	public String getApiEndpoint() {
-		return properties.getProperty("ecwid.api_endpoint");
+		return properties.getProperty(ECWID_API_ENDPOINT);
 	}
 }

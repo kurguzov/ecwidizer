@@ -11,7 +11,7 @@ import android.speech.RecognizerIntent;
 import android.widget.Toast;
 
 import com.ecwidizer.Logger;
-import com.ecwidizer.Main;
+import com.ecwidizer.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +74,7 @@ public class VoiceManager {
 		dialog.show();
 	}
 
-    public void dispatchActivityResult(Main activity, int requestCode, int resultCode, Intent data) {
+    public void dispatchActivityResult(MainActivity activity, int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_NAME) {
             if (resultCode == Activity.RESULT_OK) {
                 // Populate the wordsList with the String values the recognition engine thought it heard
