@@ -87,7 +87,7 @@ public class Main extends FragmentActivity {
         setBusy(false);
 
 		if (!isConnectedWithEcwid()) {
-			Intent intent = new Intent(this, AuthorizeAppActivity.class);
+			Intent intent = new Intent(this, WelcomeActivity.class);
 			startActivity(intent);
 		}
 

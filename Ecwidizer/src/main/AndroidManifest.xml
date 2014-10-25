@@ -30,6 +30,10 @@
             android:name="com.ecwidizer.AuthorizeAppActivity"
             android:label="@string/title_activity_authorize_app" >
         </activity>
+        <activity
+            android:name="com.ecwidizer.WelcomeActivity"
+            android:label="@string/title_activity_welcome" >
+        </activity>
     </application>
 
 </manifest>
