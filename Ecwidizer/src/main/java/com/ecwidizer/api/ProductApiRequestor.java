@@ -24,15 +24,16 @@ public class ProductApiRequestor {
 
 	public static final String ECWID_API_ENDPOINT = "https://app.ecwid.com";
 	public static final String ECWID_API_ENDPOINT_PRODUCTS = ECWID_API_ENDPOINT + "/api/v3/{storeId}/products";
+	private final String storeId;
 	private final String token;
 
-	public ProductApiRequestor(String token) {
+	public ProductApiRequestor(String storeId, String token) {
+		this.storeId = storeId;
 		this.token = token;
 	}
 
 	public void createProduct(CreateProductRequest request) throws IOException {
         List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-		String storeId = Integer.toString(request.ownerid);
 
 		parameters.add(new BasicNameValuePair("token", token));
 

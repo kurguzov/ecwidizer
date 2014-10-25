@@ -119,10 +119,6 @@ public class Main extends FragmentActivity {
 		return storeId > 0;
 	}
 
-	private String getAPIToken() {
-		return EcwidizerSettings.get().getToken();
-	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -181,7 +177,6 @@ public class Main extends FragmentActivity {
         setBusy(true);
 
         final CreateProductRequest req = new CreateProductRequest();
-        req.ownerid = 3111011;
         req.name = ((TextView) findViewById(R.id.productNameText)).getText().toString();
         req.description = null;
 
@@ -199,7 +194,8 @@ public class Main extends FragmentActivity {
             public void run() {
                 long start = System.currentTimeMillis();
                 try {
-                    new ProductApiRequestor(getAPIToken()).createProduct(req);
+					EcwidizerSettings settings = EcwidizerSettings.get();
+					new ProductApiRequestor(settings.getStoreId(), settings.getToken()).createProduct(req);
                     clearFields();
                 } catch (Exception e) {
 					showErrorMessage("Failed to create product: " + e.getMessage());
