@@ -42,7 +42,7 @@ public class ProductApiRequestor {
 		this.token = token;
 	}
 
-	public Integer createProduct(CreateProductRequest request) throws IOException {
+	public Integer createProduct(CreateProductRequest request) throws IOException, JSONException {
         List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 
 		parameters.add(new BasicNameValuePair("token", token));
@@ -78,43 +78,23 @@ public class ProductApiRequestor {
         return productId;
     }
 
-    private Integer parseProductApiResponse(HttpResponse resp) {
-        InputStream stream = null;
-        String result = null;
-        try {
-            HttpEntity entity = resp.getEntity();
-            stream = entity.getContent();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-            StringBuilder sb = new StringBuilder();
-            String line = null;
+    private Integer parseProductApiResponse(HttpResponse resp) throws IOException, JSONException {
+        HttpEntity entity = resp.getEntity();
+        InputStream stream = entity.getContent();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
 
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-
-            result = sb.toString();
-        } catch (IOException e) {
-            // Все плохо
-            return null;
-        } finally {
-            try {
-                if (stream != null) {
-                    stream.close();
-                }
-            } catch (Exception e) {
-                // Все очень плохо
-                return null;
-            }
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
         }
 
-        JSONObject jObject = null;
-        try {
-            jObject = new JSONObject(result);
-            int productId = jObject.getInt("id");
-            return productId;
-        } catch (JSONException e) {
-        }
-        return null;
+        String result = sb.toString();
+
+        JSONObject jObject = new JSONObject(result);
+        int productId = jObject.getInt("id");
+        return productId;
+
     }
 
     public void uploadImage(int productId, String ownerId, String fileName) throws IOException {

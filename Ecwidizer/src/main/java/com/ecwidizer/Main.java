@@ -198,9 +198,7 @@ public class Main extends FragmentActivity {
 					EcwidizerSettings settings = EcwidizerSettings.get();
                     ProductApiRequestor productApiRequestor = new ProductApiRequestor(settings.getStoreId(), settings.getToken());
                     Integer product = productApiRequestor.createProduct(req);
-                    if (product != null) {
-                        productApiRequestor.uploadImage(product, settings.getStoreId(), "");
-                    }
+                    productApiRequestor.uploadImage(product, settings.getStoreId(), "");
                     clearFields();
                 } catch (IOException e) {
                     Logger.error("Unable to reach Ecwid API", e);
