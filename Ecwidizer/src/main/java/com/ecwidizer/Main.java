@@ -31,6 +31,7 @@ public class Main extends FragmentActivity {
 
 	static final String SETTINGS_STORE_ID = "store_id";
 	static final String SETTINGS_STORAGE = "ecwidizer-preferences";
+	private static final String SETTINGS_TOKEN = "token";
 	private final PhotoManager photoManager = new PhotoManager();
     private final VoiceManager voiceManager = new VoiceManager();
 
@@ -130,6 +131,11 @@ public class Main extends FragmentActivity {
 		return storeId > 0;
 	}
 
+	private String getAPIToken() {
+		SharedPreferences sharedPref = getSharedPreferences(SETTINGS_STORAGE, Context.MODE_PRIVATE);
+		return sharedPref.getString(SETTINGS_TOKEN, "");
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -204,7 +210,7 @@ public class Main extends FragmentActivity {
         try {
             req.price = Double.parseDouble(priceStr);
         } catch (NumberFormatException e) {
-            Logger.error("Жжош!", e);
+			req.price = 0.0;
         }
         req.weight = 123.456;
         req.images = Arrays.asList(imageUrl);
@@ -214,7 +220,7 @@ public class Main extends FragmentActivity {
             public void run() {
                 long start = System.currentTimeMillis();
                 try {
-                    new ProductApiRequestor().createProduct(req);
+                    new ProductApiRequestor(getAPIToken()).createProduct(req);
                     clearFields();
                 } catch (IOException e) {
                     Logger.error("Платформа - ебаное говно, живи с этим.", e);

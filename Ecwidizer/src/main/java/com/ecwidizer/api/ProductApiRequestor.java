@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,9 +22,19 @@ import java.util.Locale;
  */
 public class ProductApiRequestor {
 
-    public void createProduct(CreateProductRequest request) throws IOException {
+	public static final String ECWID_API_ENDPOINT = "https://app.ecwid.com";
+	public static final String ECWID_API_ENDPOINT_PRODUCTS = ECWID_API_ENDPOINT + "/api/v3/{storeId}/products";
+	private final String token;
+
+	public ProductApiRequestor(String token) {
+		this.token = token;
+	}
+
+	public void createProduct(CreateProductRequest request) throws IOException {
         List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-        parameters.add(new BasicNameValuePair("ownerid", Integer.toString(request.ownerid)));
+		String storeId = Integer.toString(request.ownerid);
+
+		parameters.add(new BasicNameValuePair("token", token));
 
         if (request.name != null) {
             parameters.add(new BasicNameValuePair("name", request.name));
@@ -43,17 +52,9 @@ public class ProductApiRequestor {
             parameters.add(new BasicNameValuePair("weight", new DecimalFormat("#.###", new DecimalFormatSymbols(Locale.US)).format(request.weight)));
         }
 
-        if (request.images != null && !request.images.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (String image: request.images) {
-                if (sb.length() > 0) sb.append(";");
-                sb.append(image);
-            }
-            parameters.add(new BasicNameValuePair("images", sb.toString()));
-        }
-
         HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost("http://appdev.ecwid.com/productcreate");
+		String endpoint = ECWID_API_ENDPOINT_PRODUCTS.replace("{storeId}", storeId);
+		HttpPost post = new HttpPost(endpoint);
         post.setEntity(new UrlEncodedFormEntity(parameters, "UTF-8"));
         Logger.log("Product API request: "+parameters);
         HttpResponse resp = client.execute(post);
