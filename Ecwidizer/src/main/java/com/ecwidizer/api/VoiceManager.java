@@ -21,14 +21,9 @@ import java.util.List;
  */
 public class VoiceManager {
     private static final int CAPTURE_NAME = 10;
-    private static final int CAPTURE_DESCR = 11;
 
     public static void captureName(Activity activity) {
         captureVoice(activity, CAPTURE_NAME);
-    }
-
-    public static void captureDescr(Activity activity) {
-        captureVoice(activity, CAPTURE_DESCR);
     }
 
     private static void captureVoice(Activity activity, int requestCode) {
@@ -80,22 +75,18 @@ public class VoiceManager {
 	}
 
     public void dispatchActivityResult(Main activity, int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_NAME || requestCode == CAPTURE_DESCR) {
+        if (requestCode == CAPTURE_NAME) {
             if (resultCode == Activity.RESULT_OK) {
                 // Populate the wordsList with the String values the recognition engine thought it heard
                 ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 Logger.log("RECOGNIZED WORDS: " + matches);
-                if (requestCode == CAPTURE_NAME) {
-                    activity.setProductName(matches.get(0));
-                } else if (requestCode == CAPTURE_DESCR) {
-                    activity.setProductDescr(matches.get(0));
-                } else {
-                    throw new AssertionError(requestCode);
-                }
+                activity.setProductName(matches.get(0));
             } else {
                 Logger.error("Unexpected result code: "+resultCode);
             }
-        }
+        } else {
+			Logger.error("Unexpected request code: "+requestCode);
+		}
     }
 
 }

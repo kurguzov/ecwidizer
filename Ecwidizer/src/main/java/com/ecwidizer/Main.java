@@ -1,10 +1,8 @@
 package com.ecwidizer;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -20,7 +18,6 @@ import com.ecwidizer.api.CreateProductRequest;
 import com.ecwidizer.api.ProductApiRequestor;
 import com.ecwidizer.api.VoiceManager;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 public class Main extends FragmentActivity {
@@ -170,21 +167,13 @@ public class Main extends FragmentActivity {
 	}
 
     public void captureProductName(View view) {
-        voiceManager.captureName(this);
+        VoiceManager.captureName(this);
     }
 
     public void setProductName(String name) {
         name = capitalize(name);
         Logger.log("PRODUCT NAME: "+name);
         ((TextView) findViewById(R.id.productNameText)).setText(name);
-    }
-
-    public void captureProductDescr(View view) {
-        voiceManager.captureDescr(this);
-    }
-
-    public void setProductDescr(String descr) {
-        Logger.log("PRODUCT DESCR: "+descr);
     }
 
 	public void addProductClicked(View view) {
@@ -212,7 +201,8 @@ public class Main extends FragmentActivity {
                 try {
                     new ProductApiRequestor(getAPIToken()).createProduct(req);
                     clearFields();
-                } catch (IOException e) {
+                } catch (Exception e) {
+					showErrorMessage("Failed to create product: " + e.getMessage());
                     Logger.error("Платформа - ебаное говно, живи с этим.", e);
                 } finally {
                     try {
