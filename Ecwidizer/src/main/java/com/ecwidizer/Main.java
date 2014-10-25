@@ -30,6 +30,7 @@ import java.io.File;
 public class Main extends FragmentActivity {
 
 	static final String SETTINGS_STORE_ID = "store_id";
+	static final String SETTINGS_STORAGE = "ecwidizer-preferences";
 	private final PhotoManager photoManager = new PhotoManager();
     private final VoiceManager voiceManager = new VoiceManager();
 
@@ -96,18 +97,6 @@ public class Main extends FragmentActivity {
         }
     }
 
-    private boolean isConnectedWithEcwid() {
-        // проверим, настроен ли апп на магазин Ecwid
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        int storeId = 0;
-        try {
-            storeId = Integer.parseInt(sharedPref.getString(SETTINGS_STORE_ID, ""));
-        } catch (NumberFormatException e) {
-            // похуй
-        }
-        return storeId > 0;
-    }
-
     private void showNoSDCardError() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setMessage(R.string.external_storage_not_available);
@@ -128,6 +117,18 @@ public class Main extends FragmentActivity {
         }
         return false;
     }
+
+	private boolean isConnectedWithEcwid() {
+		// проверим, настроен ли апп на магазин Ecwid
+		SharedPreferences sharedPref = getSharedPreferences(SETTINGS_STORAGE, Context.MODE_PRIVATE);
+		int storeId = 0;
+		try {
+			storeId = Integer.parseInt(sharedPref.getString(SETTINGS_STORE_ID, ""));
+		} catch (NumberFormatException e) {
+			// похуй
+		}
+		return storeId > 0;
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
