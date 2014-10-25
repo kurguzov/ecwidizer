@@ -89,16 +89,7 @@ public class Main extends FragmentActivity {
 	}
 
 	private void showNoSDCardError() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setMessage(R.string.external_storage_not_available);
-        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //don't do anything
-            }
-        });
-        alert.setCancelable(true);
-        alert.create().show();
+        showErrorMessage(getResources().getString(R.string.external_storage_not_available));
     }
 
     private boolean isExternalStorageWritable() {
