@@ -196,14 +196,17 @@ public class Main extends FragmentActivity {
                 long start = System.currentTimeMillis();
 				try {
 					EcwidizerSettings settings = EcwidizerSettings.get();
-					new ProductApiRequestor(settings.getStoreId(), settings.getToken()).createProduct(req);
-					clearFields();
-				} catch (IOException e) {
-					Logger.error("Unable to reach Ecwid API", e);
-					showErrorMessage("Failed to create product. Ecwid returned error: " + e.getMessage());
-				} catch (Exception e) {
-					Logger.error("Unable to create product", e);
-					showErrorMessage("Failed to create product: " + e.getMessage());
+                    ProductApiRequestor productApiRequestor = new ProductApiRequestor(settings.getStoreId(), settings.getToken());
+                    Integer product = productApiRequestor.createProduct(req);
+                    if (product != null) {
+                        productApiRequestor.uploadImage(product, settings.getStoreId(), "");
+                    }
+                    clearFields();
+                } catch (IOException e) {
+                    Logger.error("Unable to reach Ecwid API", e);
+                    showErrorMessage("Failed to create product. Ecwid returned error: " + e.getMessage());
+                } catch (Exception e) {
+                    Logger.error("Unable to create product", e);
                 } finally {
                     try {
                         Thread.sleep(Math.max(1, 2000-(System.currentTimeMillis()-start)));
