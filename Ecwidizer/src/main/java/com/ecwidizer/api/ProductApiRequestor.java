@@ -72,15 +72,22 @@ public class ProductApiRequestor {
         Logger.log("Product API request: " + endpoint + "[" + parameters + "]");
         HttpResponse resp = client.execute(post);
         if (resp.getStatusLine().getStatusCode() != 200) {
-            Logger.log("Product API request failed: "+resp.getStatusLine());
-            throw new IOException(resp.getStatusLine().toString());
+			JSONObject jObject = parseProductApiResponse(resp);
+			String message = jObject == null ? null : jObject.getString("errorMessage");
+			Logger.log("Product API request failed: "+resp.getStatusLine() + " / " + message);
+            throw new IOException(message == null ? resp.getStatusLine().toString() : message);
         }
-        int productId = parseProductApiResponse(resp);
-        Logger.log("Product API request succeded!");
+		JSONObject jObject = parseProductApiResponse(resp);
+		if (jObject == null) {
+			Logger.log("Invalid response from Ecwid.");
+			throw new IOException("Invalid response from Ecwid.");
+		}
+		Logger.log("Product API request succeded!");
+		int productId = jObject.getInt("id");
         return productId;
     }
 
-    private Integer parseProductApiResponse(HttpResponse resp) throws IOException, JSONException {
+    private JSONObject parseProductApiResponse(HttpResponse resp) throws IOException {
         HttpEntity entity = resp.getEntity();
         InputStream stream = entity.getContent();
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
@@ -93,11 +100,12 @@ public class ProductApiRequestor {
 
         String result = sb.toString();
 
-        JSONObject jObject = new JSONObject(result);
-        int productId = jObject.getInt("id");
-        return productId;
-
-    }
+		try {
+			return new JSONObject(result);
+		} catch (JSONException e) {
+			return null;
+		}
+	}
 
     public void uploadImage(int productId, String ownerId, String fileName) throws IOException {
         List<NameValuePair> parameters = new ArrayList<NameValuePair>();

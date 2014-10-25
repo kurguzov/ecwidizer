@@ -191,6 +191,7 @@ public class Main extends FragmentActivity {
                     showErrorMessage("Failed to create product. Ecwid returned error: " + e.getMessage());
                 } catch (Exception e) {
                     Logger.error("Unable to create product", e);
+					showErrorMessage("Failed to create product: " + e.getMessage());
                 } finally {
                     try {
                         Thread.sleep(Math.max(1, 2000-(System.currentTimeMillis()-start)));
