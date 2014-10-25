@@ -178,7 +178,7 @@ public class Main extends FragmentActivity {
         } catch (NumberFormatException e) {
 			req.price = 0.0;
         }
-        req.weight = 123.456;
+        req.weight = 0.0;
         req.images = Arrays.asList(imageUrl);
 
         Thread thread = new Thread() {
@@ -187,7 +187,7 @@ public class Main extends FragmentActivity {
                 long start = System.currentTimeMillis();
 				try {
 					EcwidizerSettings settings = EcwidizerSettings.get();
-                    ProductApiRequestor productApiRequestor = new ProductApiRequestor(settings.getStoreId(), settings.getToken());
+                    ProductApiRequestor productApiRequestor = new ProductApiRequestor(settings);
                     Integer product = productApiRequestor.createProduct(req);
                     productApiRequestor.uploadImage(product, settings.getStoreId(), "");
                     clearFields();

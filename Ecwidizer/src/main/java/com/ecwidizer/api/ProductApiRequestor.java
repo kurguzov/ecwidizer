@@ -1,5 +1,6 @@
 package com.ecwidizer.api;
 
+import com.ecwidizer.EcwidizerSettings;
 import com.ecwidizer.Logger;
 
 import org.apache.http.HttpEntity;
@@ -31,15 +32,16 @@ import java.util.Locale;
  */
 public class ProductApiRequestor {
 
-	public static final String ECWID_API_ENDPOINT = "https://app.ecwid.com";
-	public static final String ECWID_API_ENDPOINT_PRODUCTS = ECWID_API_ENDPOINT + "/api/v3/{storeId}/products";
-    public static final String ECWID_API_ENDPOINT_PRODUCT_IMAGE_UPLOAD = ECWID_API_ENDPOINT_PRODUCTS + "/{productId}/image";
+	private final String productsApiEndpoint;
+    private final String imageApiEndlpoint;
     private final String storeId;
 	private final String token;
 
-	public ProductApiRequestor(String storeId, String token) {
-		this.storeId = storeId;
-		this.token = token;
+	public ProductApiRequestor(EcwidizerSettings settings) {
+		this.productsApiEndpoint = settings.getApiEndpoint() + "/api/v3/{storeId}/products";
+		this.imageApiEndlpoint = productsApiEndpoint + "/{productId}/image";
+		this.storeId = settings.getStoreId();
+		this.token = settings.getToken();
 	}
 
 	public Integer createProduct(CreateProductRequest request) throws IOException, JSONException {
@@ -64,10 +66,10 @@ public class ProductApiRequestor {
         }
 
         HttpClient client = new DefaultHttpClient();
-		String endpoint = ECWID_API_ENDPOINT_PRODUCTS.replace("{storeId}", storeId);
+		String endpoint = productsApiEndpoint.replace("{storeId}", storeId);
 		HttpPost post = new HttpPost(endpoint);
         post.setEntity(new UrlEncodedFormEntity(parameters, "UTF-8"));
-        Logger.log("Product API request: "+parameters);
+        Logger.log("Product API request: " + endpoint + "[" + parameters + "]");
         HttpResponse resp = client.execute(post);
         if (resp.getStatusLine().getStatusCode() != 200) {
             Logger.log("Product API request failed: "+resp.getStatusLine());
@@ -83,7 +85,7 @@ public class ProductApiRequestor {
         InputStream stream = entity.getContent();
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         StringBuilder sb = new StringBuilder();
-        String line = null;
+        String line;
 
         while ((line = reader.readLine()) != null) {
             sb.append(line);
@@ -103,7 +105,7 @@ public class ProductApiRequestor {
         parameters.add(new BasicNameValuePair("token", token));
 
         HttpClient client = new DefaultHttpClient();
-        String endpoint = ECWID_API_ENDPOINT_PRODUCT_IMAGE_UPLOAD.replace("{storeId}", ""+ownerId).replace("{productId}", "" + productId);
+        String endpoint = imageApiEndlpoint.replace("{storeId}", ""+ownerId).replace("{productId}", "" + productId);
         HttpPost post = new HttpPost(endpoint);
 
         File imageFile = new File(fileName);
