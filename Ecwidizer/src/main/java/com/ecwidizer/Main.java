@@ -181,7 +181,12 @@ public class Main extends FragmentActivity {
 						productApiRequestor.uploadImage(product, settings.getStoreId(), imageFile);
 					}
                     clearFields();
-					Toast.makeText(Main.this, "Product successfully uploaded.", Toast.LENGTH_SHORT);
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(Main.this, "Product successfully uploaded.", Toast.LENGTH_SHORT).show();
+						}
+					});
 				} catch (IOException e) {
                     Logger.error("Unable to reach Ecwid API", e);
                     showErrorMessage("Failed to create product. Ecwid returned error: " + e.getMessage());
