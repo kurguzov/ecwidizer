@@ -31,7 +31,7 @@ public class SettingsDialogFragment extends DialogFragment {
                     EditText storeId = (EditText)view.findViewById(R.id.store_id);
                     EditText storeKey = (EditText)view.findViewById(R.id.store_key);
                     editor.putString(Main.SETTINGS_STORE_ID, storeId.getText().toString());
-                    editor.putString(getString(R.string.store_key), storeKey.getText().toString());
+                    editor.putString(Main.SETTINGS_TOKEN, storeKey.getText().toString());
                     editor.apply();
                     }
                 })
@@ -42,7 +42,7 @@ public class SettingsDialogFragment extends DialogFragment {
                     }
                 });
         SharedPreferences sharedPref = getActivity().getSharedPreferences(Main.SETTINGS_STORAGE, Context.MODE_PRIVATE);
-        SettingsDialogFragment.this.fillSettings(sharedPref.getString(Main.SETTINGS_STORE_ID, ""), sharedPref.getString(getString(R.string.store_key), ""));
+        SettingsDialogFragment.this.fillSettings(sharedPref.getString(Main.SETTINGS_STORE_ID, ""), sharedPref.getString(Main.SETTINGS_TOKEN, ""));
 
         return builder.create();
     }

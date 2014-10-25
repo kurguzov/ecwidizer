@@ -31,7 +31,7 @@ public class Main extends FragmentActivity {
 
 	static final String SETTINGS_STORE_ID = "store_id";
 	static final String SETTINGS_STORAGE = "ecwidizer-preferences";
-	private static final String SETTINGS_TOKEN = "token";
+	static final String SETTINGS_TOKEN = "token";
 	private final PhotoManager photoManager = new PhotoManager();
     private final VoiceManager voiceManager = new VoiceManager();
 
