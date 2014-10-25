@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ecwidizer.api.CreateProductRequest;
 import com.ecwidizer.api.ProductApiRequestor;
@@ -186,9 +187,12 @@ public class Main extends FragmentActivity {
 					EcwidizerSettings settings = EcwidizerSettings.get();
                     ProductApiRequestor productApiRequestor = new ProductApiRequestor(settings);
                     Integer product = productApiRequestor.createProduct(req);
-                    productApiRequestor.uploadImage(product, settings.getStoreId(), imageFile);
+					if (imageFile != null) {
+						productApiRequestor.uploadImage(product, settings.getStoreId(), imageFile);
+					}
                     clearFields();
-                } catch (IOException e) {
+					Toast.makeText(Main.this, "Product successfully uploaded.", Toast.LENGTH_SHORT);
+				} catch (IOException e) {
                     Logger.error("Unable to reach Ecwid API", e);
                     showErrorMessage("Failed to create product. Ecwid returned error: " + e.getMessage());
                 } catch (Exception e) {

@@ -117,12 +117,9 @@ public class ProductApiRequestor {
 	}
 
     public void uploadImage(int productId, String ownerId, String fileName) throws IOException {
-        List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-
-        parameters.add(new BasicNameValuePair("token", token));
 
         HttpClient client = new DefaultHttpClient();
-        String endpoint = imageApiEndlpoint.replace("{storeId}", ""+ownerId).replace("{productId}", "" + productId);
+        String endpoint = imageApiEndlpoint.replace("{storeId}", ""+ownerId).replace("{productId}", "" + productId) + "?token=" + token;
         HttpPost post = new HttpPost(endpoint);
 
         File imageFile = new File(fileName);
@@ -130,7 +127,7 @@ public class ProductApiRequestor {
         reqEntity.setContentType("binary/octet-stream");
         reqEntity.setChunked(true);
         post.setEntity(reqEntity);
-        Logger.log("Image Upload API request: " + parameters);
+        Logger.log("Image Upload API request: " + endpoint);
         HttpResponse resp = client.execute(post);
         if (resp.getStatusLine().getStatusCode() != 200) {
             Logger.log("Image Upload API request failed: "+resp.getStatusLine());
