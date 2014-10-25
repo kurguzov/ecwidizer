@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -89,19 +90,44 @@ public class Main extends FragmentActivity {
 			Intent intent = new Intent(this, AuthorizeAppActivity.class);
 			startActivity(intent);
 		}
-	}
 
-	private boolean isConnectedWithEcwid() {
-		// проверим, настроен ли апп на магазин Ecwid
-		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-		int storeId = 0;
-		try {
-			storeId = Integer.parseInt(sharedPref.getString(SETTINGS_STORE_ID, ""));
-		} catch (NumberFormatException e) {
-			// похуй
-		}
-		return storeId > 0;
-	}
+        if (!isExternalStorageWritable()) {
+            showNoSDCardError();
+        }
+    }
+
+    private boolean isConnectedWithEcwid() {
+        // проверим, настроен ли апп на магазин Ecwid
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        int storeId = 0;
+        try {
+            storeId = Integer.parseInt(sharedPref.getString(SETTINGS_STORE_ID, ""));
+        } catch (NumberFormatException e) {
+            // похуй
+        }
+        return storeId > 0;
+    }
+
+    private void showNoSDCardError() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage(R.string.external_storage_not_available);
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //don't do anything
+            }
+        });
+        alert.setCancelable(true);
+        alert.create().show();
+    }
+
+    private boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

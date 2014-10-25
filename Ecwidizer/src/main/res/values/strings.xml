@@ -17,6 +17,10 @@
     <string name="product_price">Product price</string>
     <string name="add_product_title">Add new product to Ecwid store</string>
     <string name="product_description">Product description</string>
+<<<<<<< HEAD
     <string name="title_activity_authorize_app">AuthorizeAppActivity</string>
+=======
+    <string name="external_storage_not_available">Insert SD Card in your phone, please</string>
+>>>>>>> обработка отсутствия sd-карты
 
 </resources>
