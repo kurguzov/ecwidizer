@@ -76,7 +76,7 @@ public class MainActivity extends FragmentActivity {
 	private void initApplication() {
 		EcwidizerSettings.create(this);
 
-		if (!EcwidizerSettings.isConnectedWithEcwid()) {
+		if (!EcwidizerSettings.get().isConnectedWithEcwid()) {
 			Intent intent = new Intent(this, WelcomeActivity.class);
 			startActivity(intent);
 		}

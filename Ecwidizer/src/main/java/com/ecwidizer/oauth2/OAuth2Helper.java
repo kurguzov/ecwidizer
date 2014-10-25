@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.ecwidizer.MainActivity;
+import com.ecwidizer.EcwidizerSettings;
 import com.ecwidizer.oauth2.store.SharedPreferencesCredentialStore;
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.ClientParametersAuthentication;
@@ -64,9 +65,16 @@ public class OAuth2Helper {
 		TokenResponse tokenResponse = flow.newTokenRequest(authorizationCode)
 				.setScopes(convertScopesToString(oauth2Params.getScope()))
 				.setRedirectUri(oauth2Params.getRedirectUri()).execute();
+
+		String storeId = tokenResponse.getUnknownKeys().get("store_id").toString();
+
 		Log.i(MainActivity.TAG, "Found tokenResponse:");
 		Log.i(MainActivity.TAG, "Access Token: " + tokenResponse.getAccessToken());
 		Log.i(MainActivity.TAG, "Refresh Token: " + tokenResponse.getRefreshToken());
+		Log.i(MainActivity.TAG, "Store ID: " + storeId);
+
+		EcwidizerSettings.get().setStoreId(storeId);
+
 		flow.createAndStoreCredential(tokenResponse, oauth2Params.getUserId());
 	}
 

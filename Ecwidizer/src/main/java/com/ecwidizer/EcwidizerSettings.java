@@ -44,19 +44,22 @@ public class EcwidizerSettings {
 		return INSTANCE;
 	}
 
-	static boolean isConnectedWithEcwid() {
+	public boolean isConnectedWithEcwid() {
 		// проверим, настроен ли апп на магазин Ecwid
-		int storeId = 0;
-		try {
-			storeId = Integer.parseInt(get().getStoreId());
-		} catch (NumberFormatException e) {
-			// похуй
-		}
-		return storeId > 0;
+		return getStoreIdInt() > 0 && getToken() != null && !("".equals(getToken()));
 	}
 
 	public String getStoreId() {
 		return preferences.getString(SETTINGS_STORE_ID, "");
+	}
+
+	private int getStoreIdInt() {
+		int storeId = 0;
+		try {
+			storeId = Integer.parseInt(get().getStoreId());
+		} catch (NumberFormatException ignored) {
+		}
+		return storeId;
 	}
 
 	public void setStoreId(String storeId) {
@@ -74,4 +77,5 @@ public class EcwidizerSettings {
 	public String getApiEndpoint() {
 		return properties.getProperty(ECWID_API_ENDPOINT);
 	}
+
 }

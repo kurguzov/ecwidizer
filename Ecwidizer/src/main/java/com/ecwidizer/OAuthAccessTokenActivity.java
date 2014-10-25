@@ -144,6 +144,7 @@ public class OAuthAccessTokenActivity extends Activity {
 			if (startActivity) {
 				Log.i(MainActivity.TAG," ++++++++++++ Starting mainscreen again");
 				try {
+					//EcwidizerSettings.get().setStoreId(oAuth2Helper.loadCredential().getUse);
 					EcwidizerSettings.get().setToken(oAuth2Helper.loadCredential().getAccessToken());
 				} catch (IOException e) {
 				}
