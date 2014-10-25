@@ -16,16 +16,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ecwidizer.S3.S3Manager;
-import com.ecwidizer.S3.S3ManagerInitializeException;
 import com.ecwidizer.api.CreateProductRequest;
 import com.ecwidizer.api.ProductApiRequestor;
 import com.ecwidizer.api.VoiceManager;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.io.File;
-
 
 public class Main extends FragmentActivity {
 
@@ -37,15 +33,14 @@ public class Main extends FragmentActivity {
 	/**
 	 * Обработчик сохранения картинки
 	 */
-	class ImageSaver implements PhotoManager.SaveImageCallback, S3Manager.ImageUploadedConsumer {
+	class ImageSaver implements PhotoManager.SaveImageCallback {
 		@Override
 		public void onSuccess(String filename) {
             setBusy(true);
-			try {
-				S3Manager.getInstance(getApplicationContext()).uploadToS3(new File(filename), this);
-			} catch (S3ManagerInitializeException e) {
-				onFailure(e);
-			}
+
+			// TODO надо ли нам вообще этот класс оставлять?
+			setBusy(false);
+//			Main.this.imageUrl = imageUri;
 		}
 
 		@Override
@@ -54,12 +49,6 @@ public class Main extends FragmentActivity {
 			showErrorMessage("Failed to save image: " + e.getMessage());
 		}
 
-		@Override
-		public void imageUploaded(String imageUri) {
-            Logger.log("Image uploaded to S3: " + imageUri);
-            setBusy(false);
-            Main.this.imageUrl = imageUri;
-        }
 	}
 
 	private void showErrorMessage(final String message) {
