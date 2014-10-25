@@ -20,9 +20,10 @@ import com.ecwidizer.api.ProductApiRequestor;
 import com.ecwidizer.api.VoiceManager;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class Main extends FragmentActivity {
+
+	public static final String TAG = "ecwidizer";
 
 	private final PhotoManager photoManager = new PhotoManager();
     private final VoiceManager voiceManager = new VoiceManager();
@@ -75,7 +76,7 @@ public class Main extends FragmentActivity {
 	private void initApplication() {
 		EcwidizerSettings.create(this);
 
-		if (!isConnectedWithEcwid()) {
+		if (!EcwidizerSettings.isConnectedWithEcwid()) {
 			Intent intent = new Intent(this, WelcomeActivity.class);
 			startActivity(intent);
 		}
@@ -96,17 +97,6 @@ public class Main extends FragmentActivity {
         }
         return false;
     }
-
-	private boolean isConnectedWithEcwid() {
-		// проверим, настроен ли апп на магазин Ecwid
-		int storeId = 0;
-		try {
-			storeId = Integer.parseInt(EcwidizerSettings.get().getStoreId());
-		} catch (NumberFormatException e) {
-			// похуй
-		}
-		return storeId > 0;
-	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -16,9 +16,7 @@ android {
 dependencies {
     compile fileTree(dir: 'lib', include: '*.jar')
     compile 'com.android.support:appcompat-v7:19.1.0'
-}
-
-
-dependencies {
     compile 'com.google.android.gms:play-services:4.3.23'
+    compile 'com.google.http-client:google-http-client-jackson2:1.19.0'
+    compile 'com.google.oauth-client:google-oauth-client:1.19.0'
 }

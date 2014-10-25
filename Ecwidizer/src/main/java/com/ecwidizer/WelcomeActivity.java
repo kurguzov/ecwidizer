@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 
 public class WelcomeActivity extends FragmentActivity {
 
-    @Override
+	private final static int TOKEN_RECEIVED = 1;
+
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
@@ -43,9 +45,21 @@ public class WelcomeActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		finishIfAuthorized();
+	}
+
 	public void connectClicked(View view) {
-		Intent intent = new Intent(this, AuthorizeAppActivity.class);
-		startActivity(intent);
+		startActivityForResult(new Intent().setClass(this, OAuthAccessTokenActivity.class), TOKEN_RECEIVED);
+	}
+
+	private void finishIfAuthorized() {
+		String token = EcwidizerSettings.get().getToken();
+		if (token != null && !("".equals(token))) {
+			finish();
+		}
 	}
 
     /**

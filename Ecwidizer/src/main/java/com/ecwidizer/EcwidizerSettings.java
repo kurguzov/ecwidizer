@@ -43,6 +43,17 @@ public class EcwidizerSettings {
 		return INSTANCE;
 	}
 
+	static boolean isConnectedWithEcwid() {
+		// проверим, настроен ли апп на магазин Ecwid
+		int storeId = 0;
+		try {
+			storeId = Integer.parseInt(get().getStoreId());
+		} catch (NumberFormatException e) {
+			// похуй
+		}
+		return storeId > 0;
+	}
+
 	public String getStoreId() {
 		return preferences.getString(SETTINGS_STORE_ID, "");
 	}

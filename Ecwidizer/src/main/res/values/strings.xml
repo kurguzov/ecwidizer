@@ -23,4 +23,13 @@
     <string name="connect_your_store_button">Connect Your Store</string>
     <string name="welcome_text">Bla-bla-bla please connect to your Ecwid store to access cool features of our great app bla-bla-bla.</string>
 
+    <string name="waiting_for_data">Waiting for data....</string>
+    <string name="launch_oauth_flow">Launch OAuth Flow</string>
+    <string name="clear_credentials">Clear Credentials</string>
+    <string name="oauth_googleplus">Google Plus OAuth2</string>
+    <string name="oauth_googletasks">Google Tasks OAuth2</string>
+    <string name="oauth_foursquare">Foursquare Oauth2</string>
+    <string name="oauth">Oauth2</string>
+    <string name="api_call">API</string>
+
 </resources>
