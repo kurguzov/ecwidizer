@@ -26,7 +26,7 @@ public class Main extends FragmentActivity {
 	private final PhotoManager photoManager = new PhotoManager();
     private final VoiceManager voiceManager = new VoiceManager();
 
-    private String imageUrl;
+    private String imageFile;
 
 	/**
 	 * Обработчик сохранения картинки
@@ -34,11 +34,7 @@ public class Main extends FragmentActivity {
 	class ImageSaver implements PhotoManager.SaveImageCallback {
 		@Override
 		public void onSuccess(String filename) {
-            setBusy(true);
-
-			// TODO надо ли нам вообще этот класс оставлять?
-			setBusy(false);
-//			Main.this.imageUrl = imageUri;
+			Main.this.imageFile = filename;
 		}
 
 		@Override
@@ -179,7 +175,6 @@ public class Main extends FragmentActivity {
 			req.price = 0.0;
         }
         req.weight = 0.0;
-        req.images = Arrays.asList(imageUrl);
 
         Thread thread = new Thread() {
             @Override
@@ -189,7 +184,7 @@ public class Main extends FragmentActivity {
 					EcwidizerSettings settings = EcwidizerSettings.get();
                     ProductApiRequestor productApiRequestor = new ProductApiRequestor(settings);
                     Integer product = productApiRequestor.createProduct(req);
-                    productApiRequestor.uploadImage(product, settings.getStoreId(), "");
+                    productApiRequestor.uploadImage(product, settings.getStoreId(), imageFile);
                     clearFields();
                 } catch (IOException e) {
                     Logger.error("Unable to reach Ecwid API", e);
@@ -216,7 +211,7 @@ public class Main extends FragmentActivity {
 					mImageView.setImageBitmap(null);
 					mImageView.setImageDrawable(getResources().getDrawable(R.drawable.camera_small));
 
-					imageUrl = null;
+					imageFile = null;
 					((TextView) findViewById(R.id.productNameText)).setText("");
 					((TextView) findViewById(R.id.productPriceText)).setText("");
 				} catch (Resources.NotFoundException e) {

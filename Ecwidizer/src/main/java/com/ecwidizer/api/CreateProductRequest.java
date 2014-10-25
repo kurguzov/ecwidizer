@@ -8,5 +8,4 @@ import java.util.List;
 public class CreateProductRequest {
     public String name, description;
     public Double price, weight;
-    public List<String> images;
 }
