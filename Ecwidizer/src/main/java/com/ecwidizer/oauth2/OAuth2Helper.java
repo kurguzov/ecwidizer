@@ -44,11 +44,12 @@ public class OAuth2Helper {
 		this.oauth2Params = oauth2Params;
 		this.flow = new AuthorizationCodeFlow.Builder(
 				oauth2Params.getAccessMethod(),
-				HTTP_TRANSPORT, JSON_FACTORY,
+				HTTP_TRANSPORT,
+				JSON_FACTORY,
 				new GenericUrl(oauth2Params.getTokenServerUrl()),
-				new ClientParametersAuthentication(
-						oauth2Params.getClientId(), oauth2Params.getClientSecret()),
-						oauth2Params.getClientId(), oauth2Params.getAuthorizationServerEncodedUrl()
+				new ClientParametersAuthentication(oauth2Params.getClientId(), oauth2Params.getClientSecret()),
+				oauth2Params.getClientId(),
+				oauth2Params.getAuthorizationServerEncodedUrl()
 		).setCredentialStore(this.credentialStore).build();
 	}
 
